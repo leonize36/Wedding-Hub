@@ -60,50 +60,50 @@
   --elevate-1: rgba(0,0,0, .03);
   --elevate-2: rgba(0,0,0, .08);
 
-  /* Warm ivory and deep green palette */
-  --background: 40 33% 96%; /* #FAF7F2 */
-  --foreground: 96 20% 15%; 
-  --border: 40 20% 85%;
-  
-  --card: 40 33% 96%;
-  --card-foreground: 96 20% 15%;
-  --card-border: 40 20% 85%;
+  /* Sage green & white palette */
+  --background: 0 0% 100%; /* white */
+  --foreground: 120 15% 18%;
+  --border: 120 10% 85%;
 
-  --popover: 40 33% 96%;
-  --popover-foreground: 96 20% 15%;
-  --popover-border: 40 20% 85%;
+  --card: 120 8% 97%;
+  --card-foreground: 120 15% 18%;
+  --card-border: 120 10% 85%;
 
-  --primary: 96 57% 20%; /* #2D5016 Deep Forest Green */
-  --primary-foreground: 40 33% 96%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 120 15% 18%;
+  --popover-border: 120 10% 85%;
 
-  --secondary: 15 60% 50%; /* Terracotta */
-  --secondary-foreground: 40 33% 96%;
+  --primary: 120 22% 26%; /* dark sage green */
+  --primary-foreground: 0 0% 100%;
 
-  --muted: 40 20% 90%;
-  --muted-foreground: 96 15% 40%;
+  --secondary: 120 16% 52%; /* sage green */
+  --secondary-foreground: 0 0% 100%;
 
-  --accent: 38 40% 92%;
-  --accent-foreground: 96 20% 15%;
+  --muted: 120 8% 92%;
+  --muted-foreground: 120 10% 42%;
+
+  --accent: 120 10% 94%; /* very light sage tint */
+  --accent-foreground: 120 15% 18%;
 
   --destructive: 0 84% 60%;
   --destructive-foreground: 0 0% 98%;
 
-  --input: 40 20% 85%;
-  --ring: 96 57% 20%;
+  --input: 120 10% 88%;
+  --ring: 120 22% 26%;
 
   --app-font-sans: 'Plus Jakarta Sans', sans-serif;
   --app-font-serif: 'Playfair Display', serif;
   --app-font-script: 'Great Vibes', cursive;
   --app-font-mono: Menlo, monospace;
-  
+
   --radius: 0rem;
-  
-  --shadow-sm: 0px 2px 4px 0px rgba(45, 80, 22, 0.05);
-  --shadow: 0px 4px 8px -2px rgba(45, 80, 22, 0.1);
-  --shadow-md: 0px 8px 16px -4px rgba(45, 80, 22, 0.1);
-  --shadow-lg: 0px 16px 24px -8px rgba(45, 80, 22, 0.15);
-  --shadow-xl: 0px 24px 32px -12px rgba(45, 80, 22, 0.2);
-  --shadow-2xl: 0px 32px 48px -16px rgba(45, 80, 22, 0.25);
+
+  --shadow-sm: 0px 2px 4px 0px rgba(40, 80, 40, 0.05);
+  --shadow: 0px 4px 8px -2px rgba(40, 80, 40, 0.10);
+  --shadow-md: 0px 8px 16px -4px rgba(40, 80, 40, 0.10);
+  --shadow-lg: 0px 16px 24px -8px rgba(40, 80, 40, 0.14);
+  --shadow-xl: 0px 24px 32px -12px rgba(40, 80, 40, 0.18);
+  --shadow-2xl: 0px 32px 48px -16px rgba(40, 80, 40, 0.22);
   --tracking-normal: 0em;
   --spacing: 0.25rem;
 

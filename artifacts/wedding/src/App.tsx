@@ -32,53 +32,55 @@ const stagger = {
 
 function Hero() {
   const { scrollY } = useScroll();
-  const y = useTransform(scrollY, [0, 1000], [0, 300]);
-  const opacity = useTransform(scrollY, [0, 500], [1, 0]);
+  const y = useTransform(scrollY, [0, 800], [0, 200]);
 
   return (
     <section className="relative min-h-[100dvh] w-full overflow-hidden bg-primary flex items-center justify-center">
-      <motion.div 
-        style={{ y, opacity }}
-        className="absolute inset-0 z-0 hidden md:block"
+      {/* Desktop: subtle parallax */}
+      <motion.div
+        style={{ y }}
+        className="absolute inset-0 z-0 hidden md:block will-change-transform"
       >
-        <img 
-          src={imgHero} 
-          alt="JJ and Leonize in garden" 
-          className="w-full h-full object-cover object-center"
+        <img
+          src={imgHero}
+          alt="JJ and Leonize in garden"
+          className="w-full h-full object-cover object-top"
+          style={{ imageRendering: "auto" }}
         />
-        <div className="absolute inset-0 bg-primary/40 mix-blend-multiply" />
+        <div className="absolute inset-0 bg-primary/45" />
       </motion.div>
+      {/* Mobile: static, no transform */}
       <div className="absolute inset-0 z-0 md:hidden">
-        <img 
-          src={imgHero} 
-          alt="JJ and Leonize in garden" 
-          className="w-full h-full object-cover object-center"
+        <img
+          src={imgHero}
+          alt="JJ and Leonize in garden"
+          className="w-full h-full object-cover object-top"
         />
-        <div className="absolute inset-0 bg-primary/50 mix-blend-multiply" />
+        <div className="absolute inset-0 bg-primary/50" />
       </div>
-      
-      <div className="relative z-10 text-center px-4 w-full flex flex-col items-center pt-20 pb-12 mix-blend-normal">
+
+      <div className="relative z-10 text-center px-4 w-full flex flex-col items-center pt-20 pb-16">
         <motion.div
           initial="hidden"
           animate="visible"
           variants={stagger}
           className="flex flex-col items-center w-full"
         >
-          <motion.div variants={fadeUp} className="mb-4 md:mb-8 bg-background/10 backdrop-blur-sm px-4 py-1.5 rounded-full border border-background/20">
-            <span className="text-sm font-sans tracking-[0.2em] text-background uppercase">#FoordForever</span>
+          <motion.div variants={fadeUp} className="mb-6 md:mb-10 bg-white/10 backdrop-blur-sm px-5 py-2 rounded-full border border-white/25">
+            <span className="text-sm font-sans tracking-[0.25em] text-white uppercase">#FoordForever</span>
           </motion.div>
-          
-          <motion.h1 variants={fadeUp} className="text-[clamp(4rem,15vw,9rem)] leading-[0.8] text-background font-script drop-shadow-xl py-4 flex flex-col md:flex-row items-center justify-center gap-2 md:gap-6">
-            <span>JJ</span> 
-            <span className="text-secondary text-[clamp(3rem,10vw,6rem)]">&amp;</span> 
+
+          <motion.h1 variants={fadeUp} className="text-[clamp(3.8rem,14vw,9rem)] leading-[0.85] text-white font-script drop-shadow-2xl py-4 flex flex-col md:flex-row items-center justify-center gap-1 md:gap-6">
+            <span>JJ</span>
+            <span className="text-secondary text-[clamp(2.8rem,9vw,5.5rem)]">&amp;</span>
             <span>Leonize</span>
           </motion.h1>
-          
-          <motion.div variants={fadeUp} className="mt-8 flex flex-col md:flex-row items-center gap-3 md:gap-8 text-sm md:text-base uppercase tracking-[0.2em] font-sans text-background/90 bg-primary/40 md:bg-transparent backdrop-blur-md md:backdrop-blur-none py-4 px-8 rounded-xl md:rounded-none w-full max-w-sm md:max-w-none">
+
+          <motion.div variants={fadeUp} className="mt-8 flex flex-col md:flex-row items-center gap-3 md:gap-8 text-sm md:text-base uppercase tracking-[0.2em] font-sans text-white/90">
             <span>20 March 2027</span>
             <div className="w-1.5 h-1.5 bg-secondary rounded-full hidden md:block" />
-            <div className="w-12 h-[1px] bg-secondary/50 block md:hidden" />
-            <span>The Whitehouse</span>
+            <div className="w-10 h-[1px] bg-white/40 block md:hidden" />
+            <span>The Whitehouse · Klerksdorp</span>
           </motion.div>
         </motion.div>
       </div>
@@ -140,8 +142,9 @@ function Details() {
             <motion.div variants={fadeUp} className="bg-background p-8 shadow-sm border-t-4 border-primary">
               <h3 className="uppercase tracking-widest text-xs md:text-sm text-secondary font-semibold mb-4 border-b border-border pb-3">The Ceremony</h3>
               <p className="font-serif text-2xl md:text-3xl text-primary mb-3">The Whitehouse</p>
-              <p className="text-foreground/80 leading-relaxed mb-4">Saturday, 20 March 2027<br/>Ceremony begins at 15:00<br/><span className="italic text-sm text-foreground/60">(Bride walks in promptly at 15:00)</span></p>
-              <button className="text-xs uppercase tracking-widest border-b border-primary text-primary pb-1 hover:text-secondary hover:border-secondary transition-colors font-medium">View Map</button>
+              <p className="text-foreground/80 leading-relaxed mb-1">163 Dr Yusuf Dadoo Avenue<br/>Klerksdorp, North West</p>
+              <p className="text-foreground/80 leading-relaxed mb-4">Saturday, 20 March 2027<br/>Bride walks in at 15:00</p>
+              <a href="https://maps.google.com/?q=163+Dr+Yusuf+Dadoo+Avenue+Klerksdorp" target="_blank" rel="noopener noreferrer" className="text-xs uppercase tracking-widest border-b border-primary text-primary pb-1 hover:text-secondary hover:border-secondary transition-colors font-medium">View on Map</a>
             </motion.div>
             
             <motion.div variants={fadeUp} className="bg-background p-8 shadow-sm border-t-4 border-secondary">
@@ -264,6 +267,61 @@ function Proposal() {
   );
 }
 
+const guesthouses = [
+  { name: "Butlers Crown / Home Away Guest House", address: "78 Dr Yusuf Dadoo Avenue, Klerksdorp", note: "Closest — on the same road as the venue" },
+  { name: "9 Wena Ave Guesthouse", address: "9 Wena Avenue, Klerksdorp", note: "Short distance from the venue" },
+  { name: "Ukarimu Guest House", address: "32 Marmer Street, Klerksdorp", note: "Comfortable local guesthouse" },
+  { name: "The Willow Tree Guest House", address: "33 Dr Yusuf Dadoo Avenue, Wilkoppies", note: "On the same main road as the venue" },
+  { name: "Villa Gracia Guesthouse", address: "Dr Yusuf Dadoo Avenue area, Klerksdorp", note: "Highly rated on Agoda" },
+  { name: "Gemstone Guest House Klerksdorp", address: "Klerksdorp", note: "±3.0 km from the venue" },
+  { name: "AnnVilla Guest House", address: "Klerksdorp", note: "±3.2 km from the venue" },
+  { name: "Villa Maria Guest Lodge", address: "Klerksdorp", note: "±3.5 km from the venue" },
+];
+
+function Travel() {
+  return (
+    <section className="py-20 md:py-32 bg-accent/60 relative">
+      <div className="max-w-5xl mx-auto px-6">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-50px" }}
+          variants={stagger}
+          className="text-center mb-14"
+        >
+          <motion.span variants={fadeUp} className="font-script text-secondary text-4xl md:text-5xl mb-2 block">Plan Your Stay</motion.span>
+          <motion.h2 variants={fadeUp} className="font-serif text-4xl md:text-5xl text-primary mb-6">Where to Stay</motion.h2>
+          <motion.p variants={fadeUp} className="font-sans text-foreground/70 leading-loose max-w-2xl mx-auto">
+            The Whitehouse is at 163 Dr Yusuf Dadoo Avenue, Klerksdorp. We have listed some nearby guesthouses for your convenience — book early to secure your spot.
+          </motion.p>
+        </motion.div>
+
+        <div className="grid sm:grid-cols-2 gap-4 md:gap-6">
+          {guesthouses.map((g, i) => (
+            <motion.div
+              key={g.name}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: i * 0.07 }}
+              className="bg-background p-6 shadow-sm border-l-4 border-primary flex flex-col gap-1"
+            >
+              <div className="flex items-start justify-between gap-2">
+                <p className="font-serif text-lg text-primary leading-snug">{g.name}</p>
+                {i === 0 && (
+                  <span className="shrink-0 text-[10px] uppercase tracking-widest bg-primary text-white px-2 py-0.5 font-sans">Closest</span>
+                )}
+              </div>
+              <p className="font-sans text-sm text-foreground/60">{g.address}</p>
+              <p className="font-sans text-xs text-secondary italic mt-1">{g.note}</p>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function RSVP() {
   return (
     <section className="py-24 md:py-32 px-6 bg-background text-center border-t border-border/50">
@@ -315,6 +373,7 @@ export default function App() {
       <Details />
       <Story />
       <Proposal />
+      <Travel />
       <RSVP />
       <Footer />
     </div>

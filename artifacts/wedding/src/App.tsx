@@ -4,7 +4,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 // Images
 import imgHero from "@assets/image_1779865765353.png";
 import imgWine from "@assets/image_1779863650532.png";
-import imgDetails from "@assets/image_1779863666129.png";
+import imgDetails from "@assets/image_1779865802438.png";
 import imgProposal from "@assets/image_1779863655562.png";
 import imgGallery1 from "@assets/image_1779863578646.png";
 import imgGallery2 from "@assets/image_1779863595305.png";
@@ -158,8 +158,9 @@ function Details() {
             
             <motion.div variants={fadeUp} className="bg-background p-8 shadow-sm border-t-4 border-secondary">
               <h3 className="uppercase tracking-widest text-xs md:text-sm text-secondary font-semibold mb-4 border-b border-border pb-3">Reception to Follow</h3>
-              <p className="font-serif text-2xl md:text-3xl text-primary mb-3">The Estate Grounds</p>
-              <p className="text-foreground/80 leading-relaxed">Cocktails, dinner, and dancing under the stars immediately following the ceremony.</p>
+              <p className="font-serif text-2xl md:text-3xl text-primary mb-3">The Whitehouse</p>
+              <p className="text-foreground/80 leading-relaxed mb-1">163 Dr Yusuf Dadoo Avenue<br/>Klerksdorp, North West</p>
+              <p className="text-foreground/80 leading-relaxed">Cocktails, dinner, and dancing immediately following the ceremony.</p>
             </motion.div>
           </div>
         </motion.div>

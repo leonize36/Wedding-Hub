@@ -411,6 +411,8 @@ function RSVPSection({ onOpen }: { onOpen: () => void }) {
 
 function RSVPPage({ onBack }: { onBack: () => void }) {
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
 
   React.useEffect(() => {
     window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });
@@ -441,10 +443,39 @@ function RSVPPage({ onBack }: { onBack: () => void }) {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    setSubmitting(true);
+    setSubmitError("");
+    try {
+      const res = await fetch("https://formspree.io/f/leonizemeiring200102@gmail.com", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          name: form.name,
+          phone: form.phone,
+          email: form.email,
+          attending: form.attending,
+          dietary: form.dietary.join(", "),
+          dietaryNote: form.dietaryNote,
+          song: form.song,
+          cryFirst: form.cryFirst,
+          activity: form.activity,
+          message: form.message,
+        }),
+      });
+      if (res.ok) {
+        setSubmitted(true);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      } else {
+        const data = await res.json();
+        setSubmitError(data?.errors?.[0]?.message || "Something went wrong. Please try again.");
+      }
+    } catch {
+      setSubmitError("Could not send your RSVP. Please check your connection and try again.");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -573,12 +604,16 @@ function RSVPPage({ onBack }: { onBack: () => void }) {
                 className="w-full border border-border px-4 py-3 font-sans text-sm bg-background focus:outline-none focus:border-primary transition-colors resize-none"
               />
 
-              <div className="mt-10 flex flex-col items-center">
+              <div className="mt-10 flex flex-col items-center gap-4">
+                {submitError && (
+                  <p className="font-sans text-sm text-red-600 text-center">{submitError}</p>
+                )}
                 <button
                   type="submit"
-                  className="w-full md:w-auto bg-primary text-white px-12 py-4 font-sans text-sm uppercase tracking-[0.2em] hover:bg-primary/90 active:scale-[0.98] transition-all duration-200 shadow-md min-h-[52px]"
+                  disabled={submitting}
+                  className="w-full md:w-auto bg-primary text-white px-12 py-4 font-sans text-sm uppercase tracking-[0.2em] hover:bg-primary/90 active:scale-[0.98] transition-all duration-200 shadow-md min-h-[52px] disabled:opacity-60 disabled:cursor-not-allowed"
                 >
-                  Count me in!
+                  {submitting ? "Sending…" : "Count me in!"}
                 </button>
               </div>
 

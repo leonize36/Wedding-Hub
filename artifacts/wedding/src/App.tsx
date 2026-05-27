@@ -149,18 +149,11 @@ function Details() {
           
           <div className="space-y-10 font-sans">
             <motion.div variants={fadeUp} className="bg-background p-8 shadow-sm border-t-4 border-primary">
-              <h3 className="uppercase tracking-widest text-xs md:text-sm text-secondary font-semibold mb-4 border-b border-border pb-3">The Ceremony</h3>
+              <h3 className="uppercase tracking-widest text-xs md:text-sm text-secondary font-semibold mb-4 border-b border-border pb-3">Ceremony &amp; Reception</h3>
               <p className="font-serif text-2xl md:text-3xl text-primary mb-3">The Whitehouse</p>
               <p className="text-foreground/80 leading-relaxed mb-1">163 Dr Yusuf Dadoo Avenue<br/>Klerksdorp, North West</p>
-              <p className="text-foreground/80 leading-relaxed mb-4">Saturday, 20 March 2027<br/>Bride walks in at 15:00</p>
-              <a href="https://maps.google.com/?q=163+Dr+Yusuf+Dadoo+Avenue+Klerksdorp" target="_blank" rel="noopener noreferrer" className="text-xs uppercase tracking-widest border-b border-primary text-primary pb-1 hover:text-secondary hover:border-secondary transition-colors font-medium">View on Map</a>
-            </motion.div>
-            
-            <motion.div variants={fadeUp} className="bg-background p-8 shadow-sm border-t-4 border-secondary">
-              <h3 className="uppercase tracking-widest text-xs md:text-sm text-secondary font-semibold mb-4 border-b border-border pb-3">Reception to Follow</h3>
-              <p className="font-serif text-2xl md:text-3xl text-primary mb-3">The Whitehouse</p>
-              <p className="text-foreground/80 leading-relaxed mb-1">163 Dr Yusuf Dadoo Avenue<br/>Klerksdorp, North West</p>
-              <p className="text-foreground/80 leading-relaxed">Cocktails, dinner, and dancing immediately following the ceremony.</p>
+              <p className="text-foreground/80 leading-relaxed mb-4">Saturday, 20 March 2027<br/>Bride walks in at 15:00<br/><span className="text-sm text-foreground/60">Cocktails, dinner &amp; dancing to follow</span></p>
+              <a href="https://maps.app.goo.gl/2oTWSh4xJf8AZ5M2A" target="_blank" rel="noopener noreferrer" className="text-xs uppercase tracking-widest border-b border-primary text-primary pb-1 hover:text-secondary hover:border-secondary transition-colors font-medium">View on Map</a>
             </motion.div>
           </div>
         </motion.div>
@@ -385,7 +378,38 @@ function SectionDivider({ label }: { label: string }) {
   );
 }
 
-function RSVP() {
+function RSVPSection({ onOpen }: { onOpen: () => void }) {
+  return (
+    <section className="py-24 md:py-32 px-6 bg-primary text-white text-center">
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-50px" }}
+        variants={stagger}
+        className="max-w-xl mx-auto"
+      >
+        <motion.span variants={fadeUp} className="font-script text-secondary text-5xl block mb-4">Join Us</motion.span>
+        <motion.h2 variants={fadeUp} className="font-serif text-4xl md:text-5xl mb-6">Kindly Reply</motion.h2>
+        <motion.p variants={fadeUp} className="font-sans text-white/70 mb-3 leading-relaxed">
+          We cannot wait to celebrate with you. Please let us know if you will be joining us.
+        </motion.p>
+        <motion.p variants={fadeUp} className="font-sans text-white/50 text-xs mb-10 italic">
+          Please RSVP by 10 January &mdash; only for guests listed on your invitation.
+        </motion.p>
+        <motion.div variants={fadeUp}>
+          <button
+            onClick={onOpen}
+            className="bg-white text-primary px-12 py-4 font-sans text-sm uppercase tracking-[0.2em] hover:bg-accent active:scale-[0.98] transition-all duration-200 shadow-md min-h-[52px]"
+          >
+            RSVP
+          </button>
+        </motion.div>
+      </motion.div>
+    </section>
+  );
+}
+
+function RSVPPage({ onBack }: { onBack: () => void }) {
   const [submitted, setSubmitted] = useState(false);
   const [form, setForm] = useState({
     name: "",
@@ -415,152 +439,149 @@ function RSVP() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitted(true);
-    window.scrollTo({ top: document.getElementById("rsvp-section")?.offsetTop ?? 0, behavior: "smooth" });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (
-    <section id="rsvp-section" className="py-20 md:py-32 px-4 bg-accent/40 border-t border-border/50">
-      <motion.div
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-50px" }}
-        variants={stagger}
-        className="max-w-2xl mx-auto"
-      >
-        <motion.div variants={fadeUp} className="text-center mb-10">
-          <span className="font-script text-secondary text-4xl block mb-2">Join Us</span>
-          <h2 className="font-serif text-4xl md:text-5xl text-primary mb-4">RSVP</h2>
-          <p className="font-sans text-foreground/60 text-sm">Please RSVP by <strong className="text-primary">10 January</strong>.</p>
-          <p className="font-sans text-foreground/60 text-xs mt-2 italic">Please only RSVP for the guests listed on your invitation.</p>
-        </motion.div>
+    <div className="min-h-[100dvh] bg-background text-foreground flex flex-col">
+      {/* Page header */}
+      <div className="bg-primary text-white px-6 py-5 flex items-center gap-4 sticky top-0 z-50 shadow-md">
+        <button onClick={onBack} className="font-sans text-xs uppercase tracking-widest text-white/70 hover:text-white transition-colors flex items-center gap-2 min-h-[44px]">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8L10 13" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>
+          Back
+        </button>
+        <div className="flex-1 text-center">
+          <span className="font-script text-secondary text-2xl">JJ &amp; Leonize</span>
+        </div>
+        <div className="w-16" />
+      </div>
 
-        {submitted ? (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6 }}
-            className="bg-background border border-border p-12 text-center shadow-sm"
-          >
-            <p className="font-script text-secondary text-5xl mb-4">Thank you!</p>
-            <p className="font-serif text-xl text-primary mb-2">We cannot wait to celebrate with you!</p>
-            <p className="font-sans text-foreground/60 text-sm">#FoordForever</p>
-          </motion.div>
-        ) : (
-          <motion.form variants={fadeUp} onSubmit={handleSubmit} className="bg-background border border-border shadow-sm p-6 md:p-10 flex flex-col gap-0">
+      <div className="flex-1 px-4 py-12">
+        <div className="max-w-2xl mx-auto">
+          <div className="text-center mb-10">
+            <span className="font-script text-secondary text-4xl block mb-2">Join Us</span>
+            <h1 className="font-serif text-4xl md:text-5xl text-primary mb-3">RSVP</h1>
+            <p className="font-sans text-foreground/50 text-xs italic">Please only RSVP for the guests listed on your invitation.</p>
+          </div>
 
-            {/* ── 1. Guest details ── */}
-            <SectionDivider label="Guest Details" />
-            <div className="flex flex-col gap-4">
-              <div>
-                <label className="font-sans text-xs uppercase tracking-widest text-foreground/50 mb-1.5 block">Full Name *</label>
-                <input required value={form.name} onChange={e => set("name", e.target.value)}
-                  placeholder="Your full name"
-                  className="w-full border border-border px-4 py-3 font-sans text-sm bg-background focus:outline-none focus:border-primary transition-colors min-h-[44px]" />
-              </div>
-              <div>
-                <label className="font-sans text-xs uppercase tracking-widest text-foreground/50 mb-1.5 block">Contact Number</label>
-                <input type="tel" value={form.phone} onChange={e => set("phone", e.target.value)}
-                  placeholder="+27 ..."
-                  className="w-full border border-border px-4 py-3 font-sans text-sm bg-background focus:outline-none focus:border-primary transition-colors min-h-[44px]" />
-              </div>
-              <div>
-                <label className="font-sans text-xs uppercase tracking-widest text-foreground/50 mb-1.5 block">Email Address</label>
-                <input type="email" value={form.email} onChange={e => set("email", e.target.value)}
-                  placeholder="you@example.com"
-                  className="w-full border border-border px-4 py-3 font-sans text-sm bg-background focus:outline-none focus:border-primary transition-colors min-h-[44px]" />
-              </div>
-            </div>
+          {submitted ? (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6 }}
+              className="bg-accent/30 border border-border p-12 text-center shadow-sm"
+            >
+              <p className="font-script text-secondary text-5xl mb-4">Thank you!</p>
+              <p className="font-serif text-xl text-primary mb-2">We cannot wait to celebrate with you!</p>
+              <p className="font-sans text-foreground/50 text-sm mt-4">#FoordForever</p>
+            </motion.div>
+          ) : (
+            <form onSubmit={handleSubmit} className="bg-background border border-border shadow-sm p-6 md:p-10 flex flex-col gap-0">
 
-            {/* ── 2. Attendance ── */}
-            <SectionDivider label="Attendance" />
-            <FieldLabel>Are you joining us for the best day ever?</FieldLabel>
-            <div className="flex flex-col gap-2">
-              <RadioCard name="attending" value="yes" checked={form.attending === "yes"} onChange={v => set("attending", v)}>
-                Yes, I/we will be there
-              </RadioCard>
-              <RadioCard name="attending" value="no" checked={form.attending === "no"} onChange={v => set("attending", v)}>
-                Sadly, I/we cannot attend
-              </RadioCard>
-            </div>
-
-            {/* ── 3. Dietary ── */}
-            <SectionDivider label="Dietary" />
-            <FieldLabel>Do you have any dietary requirements or food allergies?</FieldLabel>
-            <div className="flex flex-col gap-2">
-              {dietaryOptions.map(opt => (
-                <CheckCard key={opt} checked={form.dietary.includes(opt)} onChange={() => toggleDietary(opt)}>
-                  {opt}
-                </CheckCard>
-              ))}
-            </div>
-            <textarea
-              value={form.dietaryNote}
-              onChange={e => set("dietaryNote", e.target.value)}
-              placeholder="Any additional details about allergies or dietary needs..."
-              rows={3}
-              className="w-full border border-border px-4 py-3 font-sans text-sm bg-background focus:outline-none focus:border-primary transition-colors mt-3 resize-none"
-            />
-
-            {/* ── 4. Song request ── */}
-            <SectionDivider label="Dance Floor" />
-            <FieldLabel>What song will get you on the dance floor?</FieldLabel>
-            <input value={form.song} onChange={e => set("song", e.target.value)}
-              placeholder="Song title & artist..."
-              className="w-full border border-border px-4 py-3 font-sans text-sm bg-background focus:outline-none focus:border-primary transition-colors min-h-[44px]" />
-
-            {/* ── 5. Fun questions ── */}
-            <SectionDivider label="Just for Fun" />
-            <div className="flex flex-col gap-8">
-              <div>
-                <FieldLabel>Who do you think will cry first?</FieldLabel>
-                <div className="grid grid-cols-2 gap-2">
-                  {["Bride", "Groom", "Both", "Neither"].map(opt => (
-                    <RadioCard key={opt} name="cryFirst" value={opt} checked={form.cryFirst === opt} onChange={v => set("cryFirst", v)}>
-                      {opt}
-                    </RadioCard>
-                  ))}
+              <SectionDivider label="Guest Details" />
+              <div className="flex flex-col gap-4">
+                <div>
+                  <label className="font-sans text-xs uppercase tracking-widest text-foreground/50 mb-1.5 block">Full Name *</label>
+                  <input required value={form.name} onChange={e => set("name", e.target.value)}
+                    placeholder="Your full name"
+                    className="w-full border border-border px-4 py-3 font-sans text-sm bg-background focus:outline-none focus:border-primary transition-colors min-h-[44px]" />
+                </div>
+                <div>
+                  <label className="font-sans text-xs uppercase tracking-widest text-foreground/50 mb-1.5 block">Contact Number</label>
+                  <input type="tel" value={form.phone} onChange={e => set("phone", e.target.value)}
+                    placeholder="+27 ..."
+                    className="w-full border border-border px-4 py-3 font-sans text-sm bg-background focus:outline-none focus:border-primary transition-colors min-h-[44px]" />
+                </div>
+                <div>
+                  <label className="font-sans text-xs uppercase tracking-widest text-foreground/50 mb-1.5 block">Email Address</label>
+                  <input type="email" value={form.email} onChange={e => set("email", e.target.value)}
+                    placeholder="you@example.com"
+                    className="w-full border border-border px-4 py-3 font-sans text-sm bg-background focus:outline-none focus:border-primary transition-colors min-h-[44px]" />
                 </div>
               </div>
-              <div>
-                <FieldLabel>What will you most likely be doing at the wedding?</FieldLabel>
-                <div className="flex flex-col gap-2">
-                  {["Dancing", "Taking photos", "Eating cake", "Crying happy tears", "All of the above"].map(opt => (
-                    <RadioCard key={opt} name="activity" value={opt} checked={form.activity === opt} onChange={v => set("activity", v)}>
-                      {opt}
-                    </RadioCard>
-                  ))}
+
+              <SectionDivider label="Attendance" />
+              <FieldLabel>Are you joining us for the best day ever?</FieldLabel>
+              <div className="flex flex-col gap-2">
+                <RadioCard name="attending" value="yes" checked={form.attending === "yes"} onChange={v => set("attending", v)}>
+                  Yes, I/we will be there
+                </RadioCard>
+                <RadioCard name="attending" value="no" checked={form.attending === "no"} onChange={v => set("attending", v)}>
+                  Sadly, I/we cannot attend
+                </RadioCard>
+              </div>
+
+              <SectionDivider label="Dietary" />
+              <FieldLabel>Do you have any dietary requirements or food allergies?</FieldLabel>
+              <div className="flex flex-col gap-2">
+                {dietaryOptions.map(opt => (
+                  <CheckCard key={opt} checked={form.dietary.includes(opt)} onChange={() => toggleDietary(opt)}>
+                    {opt}
+                  </CheckCard>
+                ))}
+              </div>
+              <textarea
+                value={form.dietaryNote}
+                onChange={e => set("dietaryNote", e.target.value)}
+                placeholder="Any additional details about allergies or dietary needs..."
+                rows={3}
+                className="w-full border border-border px-4 py-3 font-sans text-sm bg-background focus:outline-none focus:border-primary transition-colors mt-3 resize-none"
+              />
+
+              <SectionDivider label="Dance Floor" />
+              <FieldLabel>What song will get you on the dance floor?</FieldLabel>
+              <input value={form.song} onChange={e => set("song", e.target.value)}
+                placeholder="Song title & artist..."
+                className="w-full border border-border px-4 py-3 font-sans text-sm bg-background focus:outline-none focus:border-primary transition-colors min-h-[44px]" />
+
+              <SectionDivider label="Just for Fun" />
+              <div className="flex flex-col gap-8">
+                <div>
+                  <FieldLabel>Who do you think will cry first?</FieldLabel>
+                  <div className="grid grid-cols-2 gap-2">
+                    {["Bride", "Groom", "Both", "Neither"].map(opt => (
+                      <RadioCard key={opt} name="cryFirst" value={opt} checked={form.cryFirst === opt} onChange={v => set("cryFirst", v)}>
+                        {opt}
+                      </RadioCard>
+                    ))}
+                  </div>
+                </div>
+                <div>
+                  <FieldLabel>What will you most likely be doing at the wedding?</FieldLabel>
+                  <div className="flex flex-col gap-2">
+                    {["Dancing", "Taking photos", "Eating cake", "Crying happy tears", "All of the above"].map(opt => (
+                      <RadioCard key={opt} name="activity" value={opt} checked={form.activity === opt} onChange={v => set("activity", v)}>
+                        {opt}
+                      </RadioCard>
+                    ))}
+                  </div>
                 </div>
               </div>
-            </div>
 
-            {/* ── 6. Message ── */}
-            <SectionDivider label="A Message for Us" />
-            <FieldLabel>Leave a message for the couple</FieldLabel>
-            <textarea
-              value={form.message}
-              onChange={e => set("message", e.target.value)}
-              placeholder="Words from the heart..."
-              rows={5}
-              className="w-full border border-border px-4 py-3 font-sans text-sm bg-background focus:outline-none focus:border-primary transition-colors resize-none"
-            />
+              <SectionDivider label="A Message for Us" />
+              <FieldLabel>Leave a message for the couple</FieldLabel>
+              <textarea
+                value={form.message}
+                onChange={e => set("message", e.target.value)}
+                placeholder="Words from the heart..."
+                rows={5}
+                className="w-full border border-border px-4 py-3 font-sans text-sm bg-background focus:outline-none focus:border-primary transition-colors resize-none"
+              />
 
-            {/* ── Submit ── */}
-            <div className="mt-10 flex flex-col items-center gap-4">
-              <button
-                type="submit"
-                className="w-full md:w-auto bg-primary text-white px-12 py-4 font-sans text-sm uppercase tracking-[0.2em] hover:bg-primary/90 active:scale-[0.98] transition-all duration-200 shadow-md min-h-[52px]"
-              >
-                Count me in!
-              </button>
-              <p className="font-sans text-xs text-foreground/40 text-center">
-                Please RSVP by <strong className="text-foreground/60">10 January</strong> &mdash; only for guests listed on your invitation.
-              </p>
-            </div>
+              <div className="mt-10 flex flex-col items-center">
+                <button
+                  type="submit"
+                  className="w-full md:w-auto bg-primary text-white px-12 py-4 font-sans text-sm uppercase tracking-[0.2em] hover:bg-primary/90 active:scale-[0.98] transition-all duration-200 shadow-md min-h-[52px]"
+                >
+                  Count me in!
+                </button>
+              </div>
 
-          </motion.form>
-        )}
-      </motion.div>
-    </section>
+            </form>
+          )}
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -579,6 +600,22 @@ function Footer() {
 }
 
 export default function App() {
+  const [showRSVP, setShowRSVP] = useState(false);
+
+  const openRSVP = () => {
+    setShowRSVP(true);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const closeRSVP = () => {
+    setShowRSVP(false);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  if (showRSVP) {
+    return <RSVPPage onBack={closeRSVP} />;
+  }
+
   return (
     <div className="min-h-[100dvh] bg-background text-foreground antialiased selection:bg-secondary/20 overflow-x-hidden w-full flex flex-col">
       <Hero />
@@ -587,7 +624,7 @@ export default function App() {
       <Story />
       <Proposal />
       <Travel />
-      <RSVP />
+      <RSVPSection onOpen={openRSVP} />
       <Footer />
     </div>
   );

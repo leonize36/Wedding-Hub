@@ -1,5 +1,4 @@
 uploads = []
-outputs = []
 
 [[generated]]
 id = "0GrRBxJL0fLeejbXGXd8B"
@@ -36,3 +35,9 @@ id = "RrkXdDPiDTEFnKTEm-qQy"
 uri = "file://artifacts/wedding/public/images/registry.png"
 type = "image"
 title = "Elegant wrapped wedding gift"
+
+[[outputs]]
+id = "N9Og_tqeseHogpfosZH5m"
+uri = "file://wedding-website.zip"
+type = "unspecified"
+title = "Wedding Website — Source Code"

@@ -2,7 +2,7 @@ import React from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 
 // Images
-import imgHero from "@assets/image_1779863607998.png";
+import imgHero from "@assets/image_1779865765353.png";
 import imgWine from "@assets/image_1779863650532.png";
 import imgDetails from "@assets/image_1779863666129.png";
 import imgProposal from "@assets/image_1779863655562.png";
@@ -34,57 +34,66 @@ function Hero() {
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 800], [0, 200]);
 
-  return (
-    <section className="relative min-h-[100dvh] w-full overflow-hidden bg-primary flex items-center justify-center">
-      {/* Desktop: subtle parallax */}
-      <motion.div
-        style={{ y }}
-        className="absolute inset-0 z-0 hidden md:block will-change-transform"
-      >
-        <img
-          src={imgHero}
-          alt="JJ and Leonize in garden"
-          className="w-full h-full object-cover object-top"
-          style={{ imageRendering: "auto" }}
-        />
-        <div className="absolute inset-0 bg-primary/45" />
+  const textBlock = (
+    <motion.div
+      initial="hidden"
+      animate="visible"
+      variants={stagger}
+      className="flex flex-col items-center w-full"
+    >
+      <motion.div variants={fadeUp} className="mb-5 md:mb-10 bg-white/10 backdrop-blur-sm px-5 py-2 rounded-full border border-white/25">
+        <span className="text-sm font-sans tracking-[0.25em] text-white uppercase">#FoordForever</span>
       </motion.div>
-      {/* Mobile: static, no transform */}
-      <div className="absolute inset-0 z-0 md:hidden">
-        <img
-          src={imgHero}
-          alt="JJ and Leonize in garden"
-          className="w-full h-full object-cover object-top"
-        />
-        <div className="absolute inset-0 bg-primary/50" />
-      </div>
 
-      <div className="relative z-10 text-center px-4 w-full flex flex-col items-center pt-20 pb-16">
+      <motion.h1 variants={fadeUp} className="text-[clamp(3.8rem,14vw,9rem)] leading-[0.85] text-white font-script drop-shadow-2xl py-4 flex flex-col md:flex-row items-center justify-center gap-1 md:gap-6">
+        <span>JJ</span>
+        <span className="text-secondary text-[clamp(2.8rem,9vw,5.5rem)]">&amp;</span>
+        <span>Leonize</span>
+      </motion.h1>
+
+      <motion.div variants={fadeUp} className="mt-6 flex flex-col md:flex-row items-center gap-3 md:gap-8 text-sm md:text-base uppercase tracking-[0.2em] font-sans text-white/90">
+        <span>20 March 2027</span>
+        <div className="w-1.5 h-1.5 bg-secondary rounded-full hidden md:block" />
+        <div className="w-10 h-[1px] bg-white/40 block md:hidden" />
+        <span>The Whitehouse · Klerksdorp</span>
+      </motion.div>
+    </motion.div>
+  );
+
+  return (
+    <>
+      {/* ── Mobile hero: photo on top, text on sage green below ── */}
+      <section className="flex flex-col md:hidden w-full">
+        <div className="w-full overflow-hidden">
+          <img
+            src={imgHero}
+            alt="JJ and Leonize toasting"
+            className="w-full h-auto"
+          />
+        </div>
+        <div className="bg-primary px-6 py-12 text-center flex flex-col items-center">
+          {textBlock}
+        </div>
+      </section>
+
+      {/* ── Desktop hero: full-screen parallax ── */}
+      <section className="relative hidden md:flex min-h-[100dvh] w-full overflow-hidden bg-primary items-center justify-center">
         <motion.div
-          initial="hidden"
-          animate="visible"
-          variants={stagger}
-          className="flex flex-col items-center w-full"
+          style={{ y }}
+          className="absolute inset-0 z-0 will-change-transform"
         >
-          <motion.div variants={fadeUp} className="mb-6 md:mb-10 bg-white/10 backdrop-blur-sm px-5 py-2 rounded-full border border-white/25">
-            <span className="text-sm font-sans tracking-[0.25em] text-white uppercase">#FoordForever</span>
-          </motion.div>
-
-          <motion.h1 variants={fadeUp} className="text-[clamp(3.8rem,14vw,9rem)] leading-[0.85] text-white font-script drop-shadow-2xl py-4 flex flex-col md:flex-row items-center justify-center gap-1 md:gap-6">
-            <span>JJ</span>
-            <span className="text-secondary text-[clamp(2.8rem,9vw,5.5rem)]">&amp;</span>
-            <span>Leonize</span>
-          </motion.h1>
-
-          <motion.div variants={fadeUp} className="mt-8 flex flex-col md:flex-row items-center gap-3 md:gap-8 text-sm md:text-base uppercase tracking-[0.2em] font-sans text-white/90">
-            <span>20 March 2027</span>
-            <div className="w-1.5 h-1.5 bg-secondary rounded-full hidden md:block" />
-            <div className="w-10 h-[1px] bg-white/40 block md:hidden" />
-            <span>The Whitehouse · Klerksdorp</span>
-          </motion.div>
+          <img
+            src={imgHero}
+            alt="JJ and Leonize toasting"
+            className="w-full h-full object-cover object-center"
+          />
+          <div className="absolute inset-0 bg-primary/45" />
         </motion.div>
-      </div>
-    </section>
+        <div className="relative z-10 text-center px-4 w-full flex flex-col items-center py-20">
+          {textBlock}
+        </div>
+      </section>
+    </>
   );
 }
 

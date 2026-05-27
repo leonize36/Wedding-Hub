@@ -1,6 +1,18 @@
 import React from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 
+// Images
+import imgHero from "@assets/image_1779863607998.png";
+import imgWine from "@assets/image_1779863650532.png";
+import imgDetails from "@assets/image_1779863666129.png";
+import imgProposal from "@assets/image_1779863655562.png";
+import imgGallery1 from "@assets/image_1779863578646.png";
+import imgGallery2 from "@assets/image_1779863595305.png";
+import imgGallery3 from "@assets/image_1779863617881.png";
+import imgGallery4 from "@assets/image_1779863625991.png";
+import imgGallery5 from "@assets/image_1779863632913.png";
+import imgGallery6 from "@assets/image_1779863644908.png";
+
 const fadeUp = {
   hidden: { opacity: 0, y: 40 },
   visible: { 
@@ -24,80 +36,83 @@ function Hero() {
   const opacity = useTransform(scrollY, [0, 500], [1, 0]);
 
   return (
-    <section className="relative h-screen min-h-[800px] w-full overflow-hidden bg-background flex items-center justify-center">
+    <section className="relative min-h-[100dvh] w-full overflow-hidden bg-primary flex items-center justify-center">
       <motion.div 
         style={{ y, opacity }}
-        className="absolute inset-0 z-0"
+        className="absolute inset-0 z-0 hidden md:block"
       >
         <img 
-          src="/images/hero.png" 
-          alt="Conservatory at dusk" 
-          className="w-full h-full object-cover"
+          src={imgHero} 
+          alt="JJ and Leonize in garden" 
+          className="w-full h-full object-cover object-center"
         />
-        <div className="absolute inset-0 bg-background/40 mix-blend-multiply" />
+        <div className="absolute inset-0 bg-primary/40 mix-blend-multiply" />
       </motion.div>
+      <div className="absolute inset-0 z-0 md:hidden">
+        <img 
+          src={imgHero} 
+          alt="JJ and Leonize in garden" 
+          className="w-full h-full object-cover object-center"
+        />
+        <div className="absolute inset-0 bg-primary/50 mix-blend-multiply" />
+      </div>
       
-      <div className="relative z-10 text-center px-6 mix-blend-normal">
+      <div className="relative z-10 text-center px-4 w-full flex flex-col items-center pt-20 pb-12 mix-blend-normal">
         <motion.div
           initial="hidden"
           animate="visible"
           variants={stagger}
-          className="flex flex-col items-center"
+          className="flex flex-col items-center w-full"
         >
-          <motion.span variants={fadeUp} className="text-sm uppercase tracking-[0.3em] mb-6 text-foreground/80 font-sans">
-            Please join us for the wedding of
-          </motion.span>
+          <motion.div variants={fadeUp} className="mb-4 md:mb-8 bg-background/10 backdrop-blur-sm px-4 py-1.5 rounded-full border border-background/20">
+            <span className="text-sm font-sans tracking-[0.2em] text-background uppercase">#FoordForever</span>
+          </motion.div>
           
-          <motion.h1 variants={fadeUp} className="text-6xl md:text-8xl lg:text-9xl font-serif italic font-light mb-8">
-            Olivia <span className="font-script text-primary text-5xl md:text-7xl lg:text-8xl mx-2">&</span> James
+          <motion.h1 variants={fadeUp} className="text-[clamp(4rem,15vw,9rem)] leading-[0.8] text-background font-script drop-shadow-xl py-4 flex flex-col md:flex-row items-center justify-center gap-2 md:gap-6">
+            <span>JJ</span> 
+            <span className="text-secondary text-[clamp(3rem,10vw,6rem)]">&amp;</span> 
+            <span>Leonize</span>
           </motion.h1>
           
-          <motion.div variants={fadeUp} className="flex flex-col md:flex-row items-center gap-4 md:gap-12 text-sm uppercase tracking-[0.2em] font-sans">
-            <span>September 13, 2026</span>
-            <div className="w-1 h-1 bg-primary rounded-full hidden md:block" />
-            <span>Napa Valley, California</span>
+          <motion.div variants={fadeUp} className="mt-8 flex flex-col md:flex-row items-center gap-3 md:gap-8 text-sm md:text-base uppercase tracking-[0.2em] font-sans text-background/90 bg-primary/40 md:bg-transparent backdrop-blur-md md:backdrop-blur-none py-4 px-8 rounded-xl md:rounded-none w-full max-w-sm md:max-w-none">
+            <span>20 March 2027</span>
+            <div className="w-1.5 h-1.5 bg-secondary rounded-full hidden md:block" />
+            <div className="w-12 h-[1px] bg-secondary/50 block md:hidden" />
+            <span>The Whitehouse</span>
           </motion.div>
         </motion.div>
       </div>
-      
-      <motion.div 
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 2, duration: 1 }}
-        className="absolute bottom-12 left-1/2 -translate-x-1/2 text-foreground/50 text-sm tracking-widest uppercase flex flex-col items-center gap-4"
-      >
-        <span>Scroll</span>
-        <div className="w-[1px] h-12 bg-foreground/20 overflow-hidden relative">
-          <motion.div 
-            animate={{ y: [0, 48] }}
-            transition={{ repeat: Infinity, duration: 1.5, ease: "linear" }}
-            className="w-full h-1/2 bg-foreground/60 absolute top-0"
-          />
-        </div>
-      </motion.div>
     </section>
   );
 }
 
 function Invitation() {
   return (
-    <section className="py-32 px-6 md:px-12 max-w-4xl mx-auto text-center">
+    <section className="py-20 md:py-32 px-6 md:px-12 max-w-4xl mx-auto text-center">
       <motion.div
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true, margin: "-100px" }}
+        viewport={{ once: true, margin: "-50px" }}
         variants={stagger}
         className="flex flex-col items-center"
       >
-        <motion.div variants={fadeUp} className="mb-12">
-          <img src="/images/details.png" alt="Wax seal" className="w-24 h-24 rounded-full object-cover mx-auto shadow-sm" />
+        <motion.div variants={fadeUp} className="mb-10 relative">
+          <div className="w-32 h-32 md:w-40 md:h-40 rounded-t-full overflow-hidden mx-auto shadow-xl ring-4 ring-background ring-offset-2 ring-offset-primary/10">
+            <img src={imgWine} alt="Couple toasting" className="w-full h-full object-cover" />
+          </div>
         </motion.div>
         
-        <motion.p variants={fadeUp} className="font-serif text-2xl md:text-4xl leading-relaxed md:leading-relaxed text-foreground mb-12 italic">
-          "Together with our families, we joyfully invite you to share in our celebration of love, commitment, and the beginning of our forever."
+        <motion.p variants={fadeUp} className="font-serif text-2xl md:text-4xl leading-relaxed md:leading-relaxed text-primary mb-10 italic px-4">
+          Together with our families, we joyfully invite you to share in our celebration of love, commitment, and the beginning of our forever.
         </motion.p>
         
-        <motion.div variants={fadeUp} className="max-w-xl mx-auto font-sans text-foreground/70 leading-loose">
+        <motion.div variants={fadeUp} className="flex items-center justify-center w-full mb-10">
+          <div className="w-16 h-[1px] bg-secondary/50"></div>
+          <div className="mx-4 text-secondary text-2xl font-serif italic">&</div>
+          <div className="w-16 h-[1px] bg-secondary/50"></div>
+        </motion.div>
+        
+        <motion.div variants={fadeUp} className="max-w-xl mx-auto font-sans text-foreground/80 leading-loose px-4">
           We are so incredibly grateful for the love and support of our family and friends. We couldn't imagine taking this step without you by our side.
         </motion.div>
       </motion.div>
@@ -107,45 +122,46 @@ function Invitation() {
 
 function Details() {
   return (
-    <section className="py-24 bg-accent/30 relative">
-      <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-16 md:gap-24 items-center">
+    <section className="py-20 md:py-32 bg-accent/40 relative overflow-hidden">
+      <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-12 md:gap-24 items-center">
         <motion.div 
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={{ once: true, margin: "-50px" }}
           variants={stagger}
+          className="order-2 md:order-1"
         >
-          <motion.div variants={fadeUp}>
-            <span className="text-primary font-script text-4xl mb-4 block">The Details</span>
-            <h2 className="font-serif text-4xl md:text-5xl mb-12">When & Where</h2>
+          <motion.div variants={fadeUp} className="text-center md:text-left mb-12">
+            <span className="text-secondary font-script text-4xl md:text-5xl mb-2 block">The Details</span>
+            <h2 className="font-serif text-4xl md:text-5xl text-primary">When &amp; Where</h2>
           </motion.div>
           
-          <div className="space-y-12 font-sans">
-            <motion.div variants={fadeUp}>
-              <h3 className="uppercase tracking-widest text-sm text-foreground/50 mb-3 border-b border-border pb-2">The Ceremony</h3>
-              <p className="font-serif text-2xl mb-2">The Grand Conservatory</p>
-              <p className="text-foreground/70">Saturday, September 13, 2026<br/>Four o'clock in the afternoon</p>
-              <p className="text-foreground/70 mt-2">123 Vineyard Lane<br/>Napa Valley, CA 94558</p>
+          <div className="space-y-10 font-sans">
+            <motion.div variants={fadeUp} className="bg-background p-8 shadow-sm border-t-4 border-primary">
+              <h3 className="uppercase tracking-widest text-xs md:text-sm text-secondary font-semibold mb-4 border-b border-border pb-3">The Ceremony</h3>
+              <p className="font-serif text-2xl md:text-3xl text-primary mb-3">The Whitehouse</p>
+              <p className="text-foreground/80 leading-relaxed mb-4">Saturday, 20 March 2027<br/>Ceremony begins at 15:00<br/><span className="italic text-sm text-foreground/60">(Bride walks in promptly at 15:00)</span></p>
+              <button className="text-xs uppercase tracking-widest border-b border-primary text-primary pb-1 hover:text-secondary hover:border-secondary transition-colors font-medium">View Map</button>
             </motion.div>
             
-            <motion.div variants={fadeUp}>
-              <h3 className="uppercase tracking-widest text-sm text-foreground/50 mb-3 border-b border-border pb-2">Reception to Follow</h3>
-              <p className="font-serif text-2xl mb-2">The Estate Grounds</p>
-              <p className="text-foreground/70">Cocktails, dinner, and dancing under the stars immediately following the ceremony.</p>
-              <p className="text-foreground/70 mt-2">Black Tie Optional</p>
+            <motion.div variants={fadeUp} className="bg-background p-8 shadow-sm border-t-4 border-secondary">
+              <h3 className="uppercase tracking-widest text-xs md:text-sm text-secondary font-semibold mb-4 border-b border-border pb-3">Reception to Follow</h3>
+              <p className="font-serif text-2xl md:text-3xl text-primary mb-3">The Estate Grounds</p>
+              <p className="text-foreground/80 leading-relaxed">Cocktails, dinner, and dancing under the stars immediately following the ceremony.</p>
             </motion.div>
           </div>
         </motion.div>
         
         <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          whileInView={{ opacity: 1, scale: 1 }}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 1 }}
-          className="relative h-[600px] w-full"
+          transition={{ duration: 0.8 }}
+          className="relative aspect-[3/4] w-full order-1 md:order-2"
         >
-          <img src="/images/venue.png" alt="Venue" className="w-full h-full object-cover shadow-xl" />
-          <div className="absolute inset-0 ring-1 ring-inset ring-black/10" />
+          <img src={imgDetails} alt="Couple smiling with ring" className="w-full h-full object-cover shadow-xl rounded-sm" />
+          <div className="absolute inset-0 ring-1 ring-inset ring-primary/10 rounded-sm" />
+          <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-secondary/10 -z-10 rounded-full blur-2xl" />
         </motion.div>
       </div>
     </section>
@@ -154,124 +170,94 @@ function Details() {
 
 function Story() {
   return (
-    <section className="py-32 px-6">
-      <div className="max-w-5xl mx-auto flex flex-col md:flex-row gap-16 items-center">
-        <motion.div
-          initial={{ opacity: 0, x: -40 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1 }}
-          className="md:w-1/2 relative"
-        >
-           <div className="aspect-[3/4] w-full md:w-4/5 ml-auto relative z-10">
-             <img src="/images/couple.png" alt="Couple" className="w-full h-full object-cover shadow-2xl" />
-             <div className="absolute inset-0 ring-1 ring-inset ring-black/10" />
-           </div>
-           <div className="absolute -bottom-8 -left-8 w-64 h-64 bg-accent/50 z-0" />
-        </motion.div>
-        
-        <motion.div 
-          className="md:w-1/2"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={stagger}
-        >
-          <motion.span variants={fadeUp} className="font-script text-primary text-4xl mb-4 block">Our Story</motion.span>
-          <motion.h2 variants={fadeUp} className="font-serif text-4xl md:text-5xl mb-8">A Decade in the Making</motion.h2>
-          <motion.p variants={fadeUp} className="font-sans text-foreground/70 leading-loose mb-6">
-            From a chance meeting at a crowded coffee shop in San Francisco to a sunset proposal in Kyoto, our journey has been the greatest adventure of our lives. 
-          </motion.p>
-          <motion.p variants={fadeUp} className="font-sans text-foreground/70 leading-loose">
-            We've shared countless laughs, supported each other through challenges, and built a life together filled with joy. We cannot wait to celebrate this next chapter with all of our favorite people in one place.
-          </motion.p>
-        </motion.div>
-      </div>
-    </section>
-  );
-}
-
-function Travel() {
-  return (
-    <section className="py-32 px-6 bg-accent/20">
+    <section className="py-20 md:py-32 px-4 md:px-6">
       <div className="max-w-6xl mx-auto">
         <motion.div 
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
           variants={stagger}
-          className="text-center mb-16"
+          className="text-center mb-16 md:mb-24"
         >
-          <motion.span variants={fadeUp} className="font-script text-primary text-4xl mb-4 block">Travel & Accommodations</motion.span>
-          <motion.h2 variants={fadeUp} className="font-serif text-4xl md:text-5xl mb-6">Where to Stay</motion.h2>
-          <motion.p variants={fadeUp} className="max-w-2xl mx-auto font-sans text-foreground/70 leading-loose">
-            We have reserved a block of rooms at several local hotels for your convenience. Please book early, as September is harvest season in Napa Valley.
+          <motion.span variants={fadeUp} className="font-script text-secondary text-4xl md:text-5xl mb-2 block">Our Story</motion.span>
+          <motion.h2 variants={fadeUp} className="font-serif text-4xl md:text-5xl text-primary mb-6">A Beautiful Journey</motion.h2>
+          <motion.p variants={fadeUp} className="font-sans text-foreground/70 leading-loose max-w-2xl mx-auto px-4">
+            From our first meeting to this beautiful moment, every step has been an adventure. We've built a life filled with laughter, support, and deep love. Here are a few glimpses of our journey together.
           </motion.p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-12 items-center">
-          <motion.div
-             initial={{ opacity: 0, scale: 0.95 }}
-             whileInView={{ opacity: 1, scale: 1 }}
-             viewport={{ once: true }}
-             transition={{ duration: 1 }}
-             className="relative h-[400px] w-full order-2 md:order-1"
-          >
-            <img src="/images/travel.png" alt="Hotel exterior" className="w-full h-full object-cover shadow-lg" />
-            <div className="absolute inset-0 ring-1 ring-inset ring-black/10" />
-          </motion.div>
-
+        {/* Desktop Gallery */}
+        <div className="hidden md:grid grid-cols-3 gap-6 auto-rows-[250px]">
           <motion.div 
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={stagger}
-            className="space-y-10 order-1 md:order-2"
+            initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }}
+            className="row-span-2 col-span-2 relative group overflow-hidden"
           >
-            <motion.div variants={fadeUp}>
-              <h3 className="font-serif text-2xl mb-2">The Estate Resort</h3>
-              <p className="font-sans text-foreground/70 mb-4">Our primary room block. Transportation to and from the venue will be provided from this location.</p>
-              <button className="text-primary text-sm uppercase tracking-widest border-b border-primary pb-1 hover:text-foreground hover:border-foreground transition-colors">Book a Room</button>
-            </motion.div>
-
-            <motion.div variants={fadeUp}>
-              <h3 className="font-serif text-2xl mb-2">Auberge du Soleil</h3>
-              <p className="font-sans text-foreground/70 mb-4">A luxurious alternative just five minutes down the road, offering spectacular valley views.</p>
-              <button className="text-primary text-sm uppercase tracking-widest border-b border-primary pb-1 hover:text-foreground hover:border-foreground transition-colors">View Details</button>
-            </motion.div>
+            <img src={imgGallery1} alt="Dancing in garden" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
           </motion.div>
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ delay: 0.1 }}
+            className="row-span-1 col-span-1 relative group overflow-hidden"
+          >
+            <img src={imgGallery2} alt="Showing ring" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+          </motion.div>
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ delay: 0.2 }}
+            className="row-span-2 col-span-1 relative group overflow-hidden"
+          >
+            <img src={imgGallery3} alt="Fist pump" className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105" />
+          </motion.div>
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ delay: 0.3 }}
+            className="row-span-1 col-span-1 relative group overflow-hidden"
+          >
+            <img src={imgGallery4} alt="Bridal carry" className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105" />
+          </motion.div>
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ delay: 0.4 }}
+            className="row-span-1 col-span-1 relative group overflow-hidden"
+          >
+            <img src={imgGallery6} alt="Laughing by river" className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105" />
+          </motion.div>
+        </div>
+
+        {/* Mobile Gallery */}
+        <div className="flex flex-col gap-6 md:hidden">
+          <img src={imgGallery1} alt="Dancing in garden" className="w-full h-auto aspect-square object-cover shadow-sm" />
+          <p className="text-center font-serif text-primary italic text-lg px-6">Every day with you is a dance.</p>
+          <img src={imgGallery3} alt="Fist pump" className="w-full h-auto aspect-[4/5] object-cover shadow-sm" />
+          <img src={imgGallery4} alt="Bridal carry" className="w-full h-auto aspect-square object-cover shadow-sm" />
+          <p className="text-center font-serif text-primary italic text-lg px-6">Ready for our greatest adventure yet.</p>
+          <img src={imgGallery2} alt="Showing ring" className="w-full h-auto aspect-[4/5] object-cover shadow-sm" />
+          <img src={imgGallery6} alt="Laughing by river" className="w-full h-auto aspect-square object-cover shadow-sm" />
         </div>
       </div>
     </section>
   );
 }
 
-function Registry() {
+function Proposal() {
   return (
-    <section className="py-32 px-6 border-b border-border/50">
-      <div className="max-w-4xl mx-auto text-center">
+    <section className="py-20 md:py-32 bg-primary text-background relative overflow-hidden">
+      <div className="absolute inset-0 opacity-10 pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at center, #FAF7F2 1px, transparent 1px)', backgroundSize: '24px 24px' }}></div>
+      <div className="max-w-5xl mx-auto px-6 flex flex-col items-center text-center relative z-10">
         <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
           variants={stagger}
-          className="flex flex-col items-center"
         >
-          <motion.div variants={fadeUp} className="mb-12">
-            <img src="/images/registry.png" alt="Gift box" className="w-32 h-32 object-cover rounded-sm shadow-sm" />
+          <motion.h2 variants={fadeUp} className="font-script text-secondary text-5xl md:text-6xl mb-12">The Proposal</motion.h2>
+          
+          <motion.div variants={fadeUp} className="relative w-full max-w-3xl mx-auto mb-12">
+            <div className="aspect-[4/3] md:aspect-[16/9] w-full overflow-hidden shadow-2xl p-2 md:p-4 bg-background transform rotate-1 hover:rotate-0 transition-transform duration-500">
+              <img src={imgProposal} alt="The proposal moment" className="w-full h-full object-cover" />
+            </div>
+            <div className="absolute -bottom-6 -right-4 text-4xl md:text-6xl text-secondary">"</div>
           </motion.div>
           
-          <motion.h2 variants={fadeUp} className="font-serif text-4xl md:text-5xl mb-8">Gift Registry</motion.h2>
-          
-          <motion.p variants={fadeUp} className="font-sans text-foreground/70 leading-loose max-w-2xl mx-auto mb-10">
-            Your presence at our wedding is the greatest gift of all. If it is your wish to bless us with a gift, we have created a registry for our future home together.
+          <motion.p variants={fadeUp} className="font-serif text-xl md:text-3xl leading-relaxed max-w-2xl mx-auto italic text-background/90">
+            A perfect moment surrounded by memories, leading to the easiest "yes" of a lifetime.
           </motion.p>
-          
-          <motion.div variants={fadeUp} className="flex flex-wrap justify-center gap-6">
-            <button className="bg-transparent border border-border px-8 py-3 text-sm uppercase tracking-widest hover:bg-border/30 transition-colors">Zola</button>
-            <button className="bg-transparent border border-border px-8 py-3 text-sm uppercase tracking-widest hover:bg-border/30 transition-colors">Crate & Barrel</button>
-            <button className="bg-transparent border border-border px-8 py-3 text-sm uppercase tracking-widest hover:bg-border/30 transition-colors">Williams Sonoma</button>
-          </motion.div>
         </motion.div>
       </div>
     </section>
@@ -280,7 +266,7 @@ function Registry() {
 
 function RSVP() {
   return (
-    <section className="py-32 px-6 bg-primary text-primary-foreground text-center">
+    <section className="py-24 md:py-32 px-6 bg-background text-center border-t border-border/50">
       <motion.div 
         initial="hidden"
         whileInView="visible"
@@ -288,13 +274,17 @@ function RSVP() {
         variants={stagger}
         className="max-w-2xl mx-auto"
       >
-        <motion.h2 variants={fadeUp} className="font-serif text-5xl md:text-6xl mb-6">Kindly Reply</motion.h2>
-        <motion.p variants={fadeUp} className="font-sans uppercase tracking-widest text-sm opacity-80 mb-12">
-          By the first of August
+        <motion.div variants={fadeUp} className="mb-8">
+          <span className="font-script text-secondary text-4xl block mb-2">Join Us</span>
+          <h2 className="font-serif text-4xl md:text-5xl text-primary">Kindly Reply</h2>
+        </motion.div>
+        
+        <motion.p variants={fadeUp} className="font-sans text-foreground/70 mb-10 max-w-md mx-auto">
+          We eagerly await your response. Please let us know if you'll be joining us by the first of February.
         </motion.p>
         
         <motion.div variants={fadeUp}>
-          <button className="bg-primary-foreground text-primary px-12 py-4 uppercase tracking-[0.2em] text-sm hover:bg-accent transition-colors duration-300 shadow-xl">
+          <button className="bg-primary text-primary-foreground px-10 py-4 uppercase tracking-[0.2em] text-sm hover:bg-primary/90 transition-colors duration-300 shadow-md font-medium w-full md:w-auto min-h-[44px]">
             RSVP Online
           </button>
         </motion.div>
@@ -305,22 +295,26 @@ function RSVP() {
 
 function Footer() {
   return (
-    <footer className="py-16 text-center bg-background">
-      <p className="font-script text-4xl text-foreground/60 mb-6">Olivia & James</p>
-      <p className="font-sans text-xs uppercase tracking-widest text-foreground/40">September 13, 2026 &mdash; Napa Valley</p>
+    <footer className="py-16 text-center bg-primary text-background border-t-4 border-secondary">
+      <div className="flex flex-col items-center justify-center">
+        <p className="font-script text-5xl md:text-6xl mb-6">JJ &amp; Leonize</p>
+        <div className="mb-8 bg-background/10 backdrop-blur-sm px-6 py-2 rounded-full border border-background/20">
+          <span className="font-sans tracking-[0.2em] text-background uppercase text-sm">#FoordForever</span>
+        </div>
+        <p className="font-sans text-xs uppercase tracking-widest text-background/60">20 March 2027 &mdash; The Whitehouse</p>
+      </div>
     </footer>
   );
 }
 
 export default function App() {
   return (
-    <div className="min-h-screen bg-background text-foreground antialiased selection:bg-primary/20 overflow-x-hidden">
+    <div className="min-h-[100dvh] bg-background text-foreground antialiased selection:bg-secondary/20 overflow-x-hidden w-full flex flex-col">
       <Hero />
       <Invitation />
       <Details />
       <Story />
-      <Travel />
-      <Registry />
+      <Proposal />
       <RSVP />
       <Footer />
     </div>

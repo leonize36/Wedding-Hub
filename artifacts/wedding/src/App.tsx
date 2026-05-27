@@ -411,6 +411,11 @@ function RSVPSection({ onOpen }: { onOpen: () => void }) {
 
 function RSVPPage({ onBack }: { onBack: () => void }) {
   const [submitted, setSubmitted] = useState(false);
+
+  React.useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });
+  }, []);
+
   const [form, setForm] = useState({
     name: "",
     phone: "",

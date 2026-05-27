@@ -448,9 +448,9 @@ function RSVPPage({ onBack }: { onBack: () => void }) {
     setSubmitting(true);
     setSubmitError("");
     try {
-      const res = await fetch("https://formspree.io/f/leonizemeiring200102@gmail.com", {
+      const res = await fetch("/api/rsvp", {
         method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           name: form.name,
           phone: form.phone,
@@ -468,8 +468,8 @@ function RSVPPage({ onBack }: { onBack: () => void }) {
         setSubmitted(true);
         window.scrollTo({ top: 0, behavior: "smooth" });
       } else {
-        const data = await res.json();
-        setSubmitError(data?.errors?.[0]?.message || "Something went wrong. Please try again.");
+        const data = await res.json().catch(() => ({}));
+        setSubmitError((data as { error?: string })?.error || "Something went wrong. Please try again.");
       }
     } catch {
       setSubmitError("Could not send your RSVP. Please check your connection and try again.");
@@ -547,62 +547,80 @@ function RSVPPage({ onBack }: { onBack: () => void }) {
                 </RadioCard>
               </div>
 
-              <SectionDivider label="Dietary" />
-              <FieldLabel>Do you have any dietary requirements or food allergies?</FieldLabel>
-              <div className="flex flex-col gap-2">
-                {dietaryOptions.map(opt => (
-                  <CheckCard key={opt} checked={form.dietary.includes(opt)} onChange={() => toggleDietary(opt)}>
-                    {opt}
-                  </CheckCard>
-                ))}
-              </div>
-              <textarea
-                value={form.dietaryNote}
-                onChange={e => set("dietaryNote", e.target.value)}
-                placeholder="Any additional details about allergies or dietary needs..."
-                rows={3}
-                className="w-full border border-border px-4 py-3 font-sans text-sm bg-background focus:outline-none focus:border-primary transition-colors mt-3 resize-none"
-              />
-
-              <SectionDivider label="Dance Floor" />
-              <FieldLabel>What song will get you on the dance floor?</FieldLabel>
-              <input value={form.song} onChange={e => set("song", e.target.value)}
-                placeholder="Song title & artist..."
-                className="w-full border border-border px-4 py-3 font-sans text-sm bg-background focus:outline-none focus:border-primary transition-colors min-h-[44px]" />
-
-              <SectionDivider label="Just for Fun" />
-              <div className="flex flex-col gap-8">
-                <div>
-                  <FieldLabel>Who do you think will cry first?</FieldLabel>
-                  <div className="grid grid-cols-2 gap-2">
-                    {["Bride", "Groom", "Both", "Neither"].map(opt => (
-                      <RadioCard key={opt} name="cryFirst" value={opt} checked={form.cryFirst === opt} onChange={v => set("cryFirst", v)}>
-                        {opt}
-                      </RadioCard>
-                    ))}
-                  </div>
-                </div>
-                <div>
-                  <FieldLabel>What will you most likely be doing at the wedding?</FieldLabel>
+              {form.attending === "yes" && (
+                <>
+                  <SectionDivider label="Dietary" />
+                  <FieldLabel>Do you have any dietary requirements or food allergies?</FieldLabel>
                   <div className="flex flex-col gap-2">
-                    {["Dancing", "Taking photos", "Eating cake", "Crying happy tears", "All of the above"].map(opt => (
-                      <RadioCard key={opt} name="activity" value={opt} checked={form.activity === opt} onChange={v => set("activity", v)}>
+                    {dietaryOptions.map(opt => (
+                      <CheckCard key={opt} checked={form.dietary.includes(opt)} onChange={() => toggleDietary(opt)}>
                         {opt}
-                      </RadioCard>
+                      </CheckCard>
                     ))}
                   </div>
-                </div>
-              </div>
+                  <textarea
+                    value={form.dietaryNote}
+                    onChange={e => set("dietaryNote", e.target.value)}
+                    placeholder="Any additional details about allergies or dietary needs..."
+                    rows={3}
+                    className="w-full border border-border px-4 py-3 font-sans text-sm bg-background focus:outline-none focus:border-primary transition-colors mt-3 resize-none"
+                  />
 
-              <SectionDivider label="A Message for Us" />
-              <FieldLabel>Leave a message for the couple</FieldLabel>
-              <textarea
-                value={form.message}
-                onChange={e => set("message", e.target.value)}
-                placeholder="Words from the heart..."
-                rows={5}
-                className="w-full border border-border px-4 py-3 font-sans text-sm bg-background focus:outline-none focus:border-primary transition-colors resize-none"
-              />
+                  <SectionDivider label="Dance Floor" />
+                  <FieldLabel>What song will get you on the dance floor?</FieldLabel>
+                  <input value={form.song} onChange={e => set("song", e.target.value)}
+                    placeholder="Song title & artist..."
+                    className="w-full border border-border px-4 py-3 font-sans text-sm bg-background focus:outline-none focus:border-primary transition-colors min-h-[44px]" />
+
+                  <SectionDivider label="Just for Fun" />
+                  <div className="flex flex-col gap-8">
+                    <div>
+                      <FieldLabel>Who do you think will cry first?</FieldLabel>
+                      <div className="grid grid-cols-2 gap-2">
+                        {["Bride", "Groom", "Both", "Neither"].map(opt => (
+                          <RadioCard key={opt} name="cryFirst" value={opt} checked={form.cryFirst === opt} onChange={v => set("cryFirst", v)}>
+                            {opt}
+                          </RadioCard>
+                        ))}
+                      </div>
+                    </div>
+                    <div>
+                      <FieldLabel>What will you most likely be doing at the wedding?</FieldLabel>
+                      <div className="flex flex-col gap-2">
+                        {["Dancing", "Taking photos", "Eating cake", "Crying happy tears", "All of the above"].map(opt => (
+                          <RadioCard key={opt} name="activity" value={opt} checked={form.activity === opt} onChange={v => set("activity", v)}>
+                            {opt}
+                          </RadioCard>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+
+                  <SectionDivider label="A Message for Us" />
+                  <FieldLabel>Leave a message for the couple</FieldLabel>
+                  <textarea
+                    value={form.message}
+                    onChange={e => set("message", e.target.value)}
+                    placeholder="Words from the heart..."
+                    rows={5}
+                    className="w-full border border-border px-4 py-3 font-sans text-sm bg-background focus:outline-none focus:border-primary transition-colors resize-none"
+                  />
+                </>
+              )}
+
+              {form.attending === "no" && (
+                <>
+                  <SectionDivider label="A Message for Us" />
+                  <FieldLabel>We'll miss you! Leave a message for the couple</FieldLabel>
+                  <textarea
+                    value={form.message}
+                    onChange={e => set("message", e.target.value)}
+                    placeholder="Words from the heart..."
+                    rows={4}
+                    className="w-full border border-border px-4 py-3 font-sans text-sm bg-background focus:outline-none focus:border-primary transition-colors resize-none"
+                  />
+                </>
+              )}
 
               <div className="mt-10 flex flex-col items-center gap-4">
                 {submitError && (

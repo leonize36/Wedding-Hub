@@ -1,0 +1,38 @@
+uploads = []
+outputs = []
+
+[[generated]]
+id = "0GrRBxJL0fLeejbXGXd8B"
+uri = "file://artifacts/wedding/public/images/hero.png"
+type = "image"
+title = "Elegant wedding conservatory venue"
+
+[[generated]]
+id = "qo1uixJexd5WlmpKZUphO"
+uri = "file://artifacts/wedding/public/images/couple.png"
+type = "image"
+title = "Romantic couple hands rings"
+
+[[generated]]
+id = "IoGDsIugmQwKRezX1EsEk"
+uri = "file://artifacts/wedding/public/images/venue.png"
+type = "image"
+title = "Napa valley vineyard twilight"
+
+[[generated]]
+id = "JveQ3zwJV5iFF0K7OcdZU"
+uri = "file://artifacts/wedding/public/images/details.png"
+type = "image"
+title = "Wax seal on textured paper"
+
+[[generated]]
+id = "lUEdSBNvyKjl1Tki8zaQk"
+uri = "file://artifacts/wedding/public/images/travel.png"
+type = "image"
+title = "Napa valley luxury hotel resort"
+
+[[generated]]
+id = "RrkXdDPiDTEFnKTEm-qQy"
+uri = "file://artifacts/wedding/public/images/registry.png"
+type = "image"
+title = "Elegant wrapped wedding gift"

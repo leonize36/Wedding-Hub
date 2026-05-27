@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 
 // Images
@@ -332,30 +332,233 @@ function Travel() {
   );
 }
 
-function RSVP() {
+const dietaryOptions = [
+  "None",
+  "Vegetarian",
+  "Vegan",
+  "Halaal",
+  "Gluten-free",
+  "Food allergies",
+  "Other",
+];
+
+function RadioCard({ name, value, checked, onChange, children }: {
+  name: string; value: string; checked: boolean;
+  onChange: (v: string) => void; children: React.ReactNode;
+}) {
   return (
-    <section className="py-24 md:py-32 px-6 bg-background text-center border-t border-border/50">
-      <motion.div 
+    <label className={`flex items-center gap-3 px-4 py-3 border cursor-pointer transition-all duration-200 select-none ${checked ? "border-primary bg-primary/5 text-primary font-medium" : "border-border bg-background text-foreground/70 hover:border-primary/40"}`}>
+      <span className={`w-4 h-4 shrink-0 rounded-full border-2 flex items-center justify-center transition-colors ${checked ? "border-primary" : "border-border"}`}>
+        {checked && <span className="w-2 h-2 rounded-full bg-primary block" />}
+      </span>
+      <input type="radio" name={name} value={value} checked={checked} onChange={() => onChange(value)} className="sr-only" />
+      <span className="font-sans text-sm leading-snug">{children}</span>
+    </label>
+  );
+}
+
+function CheckCard({ checked, onChange, children }: {
+  checked: boolean; onChange: (v: boolean) => void; children: React.ReactNode;
+}) {
+  return (
+    <label className={`flex items-center gap-3 px-4 py-3 border cursor-pointer transition-all duration-200 select-none ${checked ? "border-primary bg-primary/5 text-primary font-medium" : "border-border bg-background text-foreground/70 hover:border-primary/40"}`}>
+      <span className={`w-4 h-4 shrink-0 border-2 flex items-center justify-center transition-colors ${checked ? "border-primary bg-primary" : "border-border"}`}>
+        {checked && <svg className="w-2.5 h-2.5 text-white" fill="none" viewBox="0 0 10 10"><path d="M1.5 5l2.5 2.5 4.5-4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>}
+      </span>
+      <input type="checkbox" checked={checked} onChange={e => onChange(e.target.checked)} className="sr-only" />
+      <span className="font-sans text-sm leading-snug">{children}</span>
+    </label>
+  );
+}
+
+function FieldLabel({ children }: { children: React.ReactNode }) {
+  return <p className="font-serif text-lg text-primary mb-3">{children}</p>;
+}
+
+function SectionDivider({ label }: { label: string }) {
+  return (
+    <div className="flex items-center gap-4 my-8">
+      <div className="flex-1 h-px bg-border" />
+      <span className="font-script text-secondary text-2xl shrink-0">{label}</span>
+      <div className="flex-1 h-px bg-border" />
+    </div>
+  );
+}
+
+function RSVP() {
+  const [submitted, setSubmitted] = useState(false);
+  const [form, setForm] = useState({
+    name: "",
+    phone: "",
+    email: "",
+    attending: "",
+    dietary: [] as string[],
+    dietaryNote: "",
+    song: "",
+    cryFirst: "",
+    activity: "",
+    message: "",
+  });
+
+  const set = (field: string, value: string) => setForm(f => ({ ...f, [field]: value }));
+
+  const toggleDietary = (option: string) => {
+    setForm(f => {
+      const has = f.dietary.includes(option);
+      let next = has ? f.dietary.filter(d => d !== option) : [...f.dietary, option];
+      if (option === "None" && !has) next = ["None"];
+      if (option !== "None" && !has) next = next.filter(d => d !== "None");
+      return { ...f, dietary: next };
+    });
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setSubmitted(true);
+    window.scrollTo({ top: document.getElementById("rsvp-section")?.offsetTop ?? 0, behavior: "smooth" });
+  };
+
+  return (
+    <section id="rsvp-section" className="py-20 md:py-32 px-4 bg-accent/40 border-t border-border/50">
+      <motion.div
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true }}
+        viewport={{ once: true, margin: "-50px" }}
         variants={stagger}
         className="max-w-2xl mx-auto"
       >
-        <motion.div variants={fadeUp} className="mb-8">
+        <motion.div variants={fadeUp} className="text-center mb-10">
           <span className="font-script text-secondary text-4xl block mb-2">Join Us</span>
-          <h2 className="font-serif text-4xl md:text-5xl text-primary">Kindly Reply</h2>
+          <h2 className="font-serif text-4xl md:text-5xl text-primary mb-4">RSVP</h2>
+          <p className="font-sans text-foreground/60 text-sm">Please RSVP by <strong className="text-primary">10 January</strong>.</p>
+          <p className="font-sans text-foreground/60 text-xs mt-2 italic">Please only RSVP for the guests listed on your invitation.</p>
         </motion.div>
-        
-        <motion.p variants={fadeUp} className="font-sans text-foreground/70 mb-10 max-w-md mx-auto">
-          We eagerly await your response. Please let us know if you'll be joining us by the first of February.
-        </motion.p>
-        
-        <motion.div variants={fadeUp}>
-          <button className="bg-primary text-primary-foreground px-10 py-4 uppercase tracking-[0.2em] text-sm hover:bg-primary/90 transition-colors duration-300 shadow-md font-medium w-full md:w-auto min-h-[44px]">
-            RSVP Online
-          </button>
-        </motion.div>
+
+        {submitted ? (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6 }}
+            className="bg-background border border-border p-12 text-center shadow-sm"
+          >
+            <p className="font-script text-secondary text-5xl mb-4">Thank you!</p>
+            <p className="font-serif text-xl text-primary mb-2">We cannot wait to celebrate with you!</p>
+            <p className="font-sans text-foreground/60 text-sm">#FoordForever</p>
+          </motion.div>
+        ) : (
+          <motion.form variants={fadeUp} onSubmit={handleSubmit} className="bg-background border border-border shadow-sm p-6 md:p-10 flex flex-col gap-0">
+
+            {/* ── 1. Guest details ── */}
+            <SectionDivider label="Guest Details" />
+            <div className="flex flex-col gap-4">
+              <div>
+                <label className="font-sans text-xs uppercase tracking-widest text-foreground/50 mb-1.5 block">Full Name *</label>
+                <input required value={form.name} onChange={e => set("name", e.target.value)}
+                  placeholder="Your full name"
+                  className="w-full border border-border px-4 py-3 font-sans text-sm bg-background focus:outline-none focus:border-primary transition-colors min-h-[44px]" />
+              </div>
+              <div>
+                <label className="font-sans text-xs uppercase tracking-widest text-foreground/50 mb-1.5 block">Contact Number</label>
+                <input type="tel" value={form.phone} onChange={e => set("phone", e.target.value)}
+                  placeholder="+27 ..."
+                  className="w-full border border-border px-4 py-3 font-sans text-sm bg-background focus:outline-none focus:border-primary transition-colors min-h-[44px]" />
+              </div>
+              <div>
+                <label className="font-sans text-xs uppercase tracking-widest text-foreground/50 mb-1.5 block">Email Address</label>
+                <input type="email" value={form.email} onChange={e => set("email", e.target.value)}
+                  placeholder="you@example.com"
+                  className="w-full border border-border px-4 py-3 font-sans text-sm bg-background focus:outline-none focus:border-primary transition-colors min-h-[44px]" />
+              </div>
+            </div>
+
+            {/* ── 2. Attendance ── */}
+            <SectionDivider label="Attendance" />
+            <FieldLabel>Are you joining us for the best day ever?</FieldLabel>
+            <div className="flex flex-col gap-2">
+              <RadioCard name="attending" value="yes" checked={form.attending === "yes"} onChange={v => set("attending", v)}>
+                Yes, I/we will be there
+              </RadioCard>
+              <RadioCard name="attending" value="no" checked={form.attending === "no"} onChange={v => set("attending", v)}>
+                Sadly, I/we cannot attend
+              </RadioCard>
+            </div>
+
+            {/* ── 3. Dietary ── */}
+            <SectionDivider label="Dietary" />
+            <FieldLabel>Do you have any dietary requirements or food allergies?</FieldLabel>
+            <div className="flex flex-col gap-2">
+              {dietaryOptions.map(opt => (
+                <CheckCard key={opt} checked={form.dietary.includes(opt)} onChange={() => toggleDietary(opt)}>
+                  {opt}
+                </CheckCard>
+              ))}
+            </div>
+            <textarea
+              value={form.dietaryNote}
+              onChange={e => set("dietaryNote", e.target.value)}
+              placeholder="Any additional details about allergies or dietary needs..."
+              rows={3}
+              className="w-full border border-border px-4 py-3 font-sans text-sm bg-background focus:outline-none focus:border-primary transition-colors mt-3 resize-none"
+            />
+
+            {/* ── 4. Song request ── */}
+            <SectionDivider label="Dance Floor" />
+            <FieldLabel>What song will get you on the dance floor?</FieldLabel>
+            <input value={form.song} onChange={e => set("song", e.target.value)}
+              placeholder="Song title & artist..."
+              className="w-full border border-border px-4 py-3 font-sans text-sm bg-background focus:outline-none focus:border-primary transition-colors min-h-[44px]" />
+
+            {/* ── 5. Fun questions ── */}
+            <SectionDivider label="Just for Fun" />
+            <div className="flex flex-col gap-8">
+              <div>
+                <FieldLabel>Who do you think will cry first?</FieldLabel>
+                <div className="grid grid-cols-2 gap-2">
+                  {["Bride", "Groom", "Both", "Neither"].map(opt => (
+                    <RadioCard key={opt} name="cryFirst" value={opt} checked={form.cryFirst === opt} onChange={v => set("cryFirst", v)}>
+                      {opt}
+                    </RadioCard>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <FieldLabel>What will you most likely be doing at the wedding?</FieldLabel>
+                <div className="flex flex-col gap-2">
+                  {["Dancing", "Taking photos", "Eating cake", "Crying happy tears", "All of the above"].map(opt => (
+                    <RadioCard key={opt} name="activity" value={opt} checked={form.activity === opt} onChange={v => set("activity", v)}>
+                      {opt}
+                    </RadioCard>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* ── 6. Message ── */}
+            <SectionDivider label="A Message for Us" />
+            <FieldLabel>Leave a message for the couple</FieldLabel>
+            <textarea
+              value={form.message}
+              onChange={e => set("message", e.target.value)}
+              placeholder="Words from the heart..."
+              rows={5}
+              className="w-full border border-border px-4 py-3 font-sans text-sm bg-background focus:outline-none focus:border-primary transition-colors resize-none"
+            />
+
+            {/* ── Submit ── */}
+            <div className="mt-10 flex flex-col items-center gap-4">
+              <button
+                type="submit"
+                className="w-full md:w-auto bg-primary text-white px-12 py-4 font-sans text-sm uppercase tracking-[0.2em] hover:bg-primary/90 active:scale-[0.98] transition-all duration-200 shadow-md min-h-[52px]"
+              >
+                Count me in!
+              </button>
+              <p className="font-sans text-xs text-foreground/40 text-center">
+                Please RSVP by <strong className="text-foreground/60">10 January</strong> &mdash; only for guests listed on your invitation.
+              </p>
+            </div>
+
+          </motion.form>
+        )}
       </motion.div>
     </section>
   );

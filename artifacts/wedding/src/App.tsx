@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, type Variants } from "framer-motion";
 
 // Images
 import imgHero from "@assets/image_1779865765353.png";
@@ -13,7 +13,7 @@ import imgGallery4 from "@assets/image_1779863625991.png";
 import imgGallery5 from "@assets/image_1779863632913.png";
 import imgGallery6 from "@assets/image_1779863644908.png";
 
-const fadeUp = {
+const fadeUp: Variants = {
   hidden: { opacity: 0, y: 40 },
   visible: { 
     opacity: 1, 
@@ -98,6 +98,8 @@ function Hero() {
 }
 
 function Invitation() {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
     <section className="py-20 md:py-32 px-6 md:px-12 max-w-4xl mx-auto text-center">
       <motion.div
@@ -107,24 +109,47 @@ function Invitation() {
         variants={stagger}
         className="flex flex-col items-center"
       >
-        <motion.div variants={fadeUp} className="mb-10 relative">
-          <div className="w-32 h-32 md:w-40 md:h-40 rounded-t-full overflow-hidden mx-auto shadow-xl ring-4 ring-background ring-offset-2 ring-offset-primary/10">
-            <img src={imgWine} alt="Couple toasting" className="w-full h-full object-cover" />
-          </div>
-        </motion.div>
-        
-        <motion.p variants={fadeUp} className="font-serif text-2xl md:text-4xl leading-relaxed md:leading-relaxed text-primary mb-10 italic px-4">
-          Together with our families, we joyfully invite you to share in our celebration of love, commitment, and the beginning of our forever.
-        </motion.p>
-        
-        <motion.div variants={fadeUp} className="flex items-center justify-center w-full mb-10">
-          <div className="w-16 h-[1px] bg-secondary/50"></div>
-          <div className="mx-4 text-secondary text-2xl font-serif italic">&</div>
-          <div className="w-16 h-[1px] bg-secondary/50"></div>
-        </motion.div>
-        
-        <motion.div variants={fadeUp} className="max-w-xl mx-auto font-sans text-foreground/80 leading-loose px-4">
-          We are so incredibly grateful for the love and support of our family and friends. We couldn't imagine taking this step without you by our side.
+        <motion.div variants={fadeUp} className={`invitation-scene ${isOpen ? "is-open" : ""}`}>
+          <button
+            type="button"
+            className={`envelope ${isOpen ? "is-open" : ""}`}
+            onClick={() => setIsOpen(open => !open)}
+            aria-expanded={isOpen}
+            aria-label={isOpen ? "Close the wedding invitation" : "Open the wedding invitation"}
+          >
+            <div className="invitation-letter">
+              <div className="invitation-letter-inner">
+                <div className="w-24 h-24 md:w-32 md:h-32 rounded-t-full overflow-hidden mx-auto shadow-lg ring-4 ring-background ring-offset-2 ring-offset-primary/10">
+                  <img src={imgWine} alt="Couple toasting" className="w-full h-full object-cover" />
+                </div>
+
+                <p className="font-serif text-xl md:text-3xl leading-relaxed text-primary mt-7 mb-7 italic">
+                  Together with our families, we joyfully invite you to share in our celebration of love, commitment, and the beginning of our forever.
+                </p>
+
+                <div className="flex items-center justify-center w-full mb-7">
+                  <div className="w-12 h-px bg-secondary/50"></div>
+                  <div className="mx-4 text-secondary text-xl font-serif italic">&amp;</div>
+                  <div className="w-12 h-px bg-secondary/50"></div>
+                </div>
+
+                <p className="max-w-md mx-auto font-sans text-sm md:text-base text-foreground/75 leading-loose">
+                  We are so incredibly grateful for the love and support of our family and friends. We couldn't imagine taking this step without you by our side.
+                </p>
+              </div>
+            </div>
+
+            <div className="envelope-back" aria-hidden="true" />
+            <div className="envelope-pocket" aria-hidden="true" />
+            <div className="envelope-flap" aria-hidden="true" />
+            <span className="envelope-seal" aria-hidden="true">
+              JJ <span>&amp;</span> L
+            </span>
+          </button>
+
+          <p className="mt-7 font-sans text-[11px] uppercase tracking-[0.24em] text-primary/60 transition-opacity duration-300">
+            {isOpen ? "Tap the seal to close" : "Tap the seal to open your invitation"}
+          </p>
         </motion.div>
       </motion.div>
     </section>

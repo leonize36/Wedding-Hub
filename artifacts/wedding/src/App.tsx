@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { motion, useScroll, useTransform, type Variants } from "framer-motion";
+import { AnimatePresence, motion, useScroll, useTransform, type Variants } from "framer-motion";
 
 // Images
 import imgHero from "@assets/image_1779865765353.png";
@@ -98,8 +98,6 @@ function Hero() {
 }
 
 function Invitation() {
-  const [isOpen, setIsOpen] = useState(false);
-
   return (
     <section className="py-20 md:py-32 px-6 md:px-12 max-w-4xl mx-auto text-center">
       <motion.div
@@ -109,47 +107,24 @@ function Invitation() {
         variants={stagger}
         className="flex flex-col items-center"
       >
-        <motion.div variants={fadeUp} className={`invitation-scene ${isOpen ? "is-open" : ""}`}>
-          <button
-            type="button"
-            className={`envelope ${isOpen ? "is-open" : ""}`}
-            onClick={() => setIsOpen(open => !open)}
-            aria-expanded={isOpen}
-            aria-label={isOpen ? "Close the wedding invitation" : "Open the wedding invitation"}
-          >
-            <div className="invitation-letter">
-              <div className="invitation-letter-inner">
-                <div className="w-24 h-24 md:w-32 md:h-32 rounded-t-full overflow-hidden mx-auto shadow-lg ring-4 ring-background ring-offset-2 ring-offset-primary/10">
-                  <img src={imgWine} alt="Couple toasting" className="w-full h-full object-cover" />
-                </div>
+        <motion.div variants={fadeUp} className="mb-10 relative">
+          <div className="w-32 h-32 md:w-40 md:h-40 rounded-t-full overflow-hidden mx-auto shadow-xl ring-4 ring-background ring-offset-2 ring-offset-primary/10">
+            <img src={imgWine} alt="Couple toasting" className="w-full h-full object-cover" />
+          </div>
+        </motion.div>
 
-                <p className="font-serif text-xl md:text-3xl leading-relaxed text-primary mt-7 mb-7 italic">
-                  Together with our families, we joyfully invite you to share in our celebration of love, commitment, and the beginning of our forever.
-                </p>
+        <motion.p variants={fadeUp} className="font-serif text-2xl md:text-4xl leading-relaxed md:leading-relaxed text-primary mb-10 italic px-4">
+          Together with our families, we joyfully invite you to share in our celebration of love, commitment, and the beginning of our forever.
+        </motion.p>
 
-                <div className="flex items-center justify-center w-full mb-7">
-                  <div className="w-12 h-px bg-secondary/50"></div>
-                  <div className="mx-4 text-secondary text-xl font-serif italic">&amp;</div>
-                  <div className="w-12 h-px bg-secondary/50"></div>
-                </div>
+        <motion.div variants={fadeUp} className="flex items-center justify-center w-full mb-10">
+          <div className="w-16 h-[1px] bg-secondary/50"></div>
+          <div className="mx-4 text-secondary text-2xl font-serif italic">&amp;</div>
+          <div className="w-16 h-[1px] bg-secondary/50"></div>
+        </motion.div>
 
-                <p className="max-w-md mx-auto font-sans text-sm md:text-base text-foreground/75 leading-loose">
-                  We are so incredibly grateful for the love and support of our family and friends. We couldn't imagine taking this step without you by our side.
-                </p>
-              </div>
-            </div>
-
-            <div className="envelope-back" aria-hidden="true" />
-            <div className="envelope-pocket" aria-hidden="true" />
-            <div className="envelope-flap" aria-hidden="true" />
-            <span className="envelope-seal" aria-hidden="true">
-              JJ <span>&amp;</span> L
-            </span>
-          </button>
-
-          <p className="mt-7 font-sans text-[11px] uppercase tracking-[0.24em] text-primary/60 transition-opacity duration-300">
-            {isOpen ? "Tap the seal to close" : "Tap the seal to open your invitation"}
-          </p>
+        <motion.div variants={fadeUp} className="max-w-xl mx-auto font-sans text-foreground/80 leading-loose px-4">
+          We are so incredibly grateful for the love and support of our family and friends. We couldn't imagine taking this step without you by our side.
         </motion.div>
       </motion.div>
     </section>
@@ -668,6 +643,58 @@ function RSVPPage({ onBack }: { onBack: () => void }) {
   );
 }
 
+function EnvelopeWelcome({ onOpen }: { onOpen: () => void }) {
+  const [isOpening, setIsOpening] = useState(false);
+
+  const handleOpen = () => {
+    if (isOpening) return;
+    setIsOpening(true);
+    window.setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });
+      onOpen();
+    }, 950);
+  };
+
+  return (
+    <motion.section
+      className="envelope-welcome"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0, scale: 1.04, transition: { duration: 0.4 } }}
+    >
+      <div className={`welcome-envelope ${isOpening ? "is-opening" : ""}`}>
+        <div className="welcome-letter" aria-hidden="true">
+          <div className="welcome-letter-inner">
+            <span className="font-script text-5xl md:text-7xl text-primary">JJ &amp; Leonize</span>
+            <span className="font-sans text-[10px] md:text-xs uppercase tracking-[0.3em] text-secondary">20 March 2027</span>
+          </div>
+        </div>
+        <div className="welcome-envelope-back" aria-hidden="true" />
+        <div className="welcome-envelope-pocket" aria-hidden="true" />
+        <div className="welcome-envelope-flap" aria-hidden="true" />
+        <button
+          type="button"
+          className="welcome-seal"
+          onClick={handleOpen}
+          disabled={isOpening}
+          aria-label="Open the wedding invitation"
+        >
+          <span>JJ</span>
+          <strong>&amp;</strong>
+          <span>L</span>
+        </button>
+      </div>
+
+      <motion.p
+        className="mt-10 font-sans text-xs uppercase tracking-[0.3em] text-white/75"
+        animate={{ opacity: isOpening ? 0 : 1 }}
+      >
+        Click the seal to open
+      </motion.p>
+    </motion.section>
+  );
+}
+
 function Footer() {
   return (
     <footer className="py-16 text-center bg-primary text-background border-t-4 border-secondary">
@@ -684,6 +711,7 @@ function Footer() {
 
 export default function App() {
   const [showRSVP, setShowRSVP] = useState(false);
+  const [invitationOpened, setInvitationOpened] = useState(false);
 
   const openRSVP = () => {
     setShowRSVP(true);
@@ -700,15 +728,27 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-[100dvh] bg-background text-foreground antialiased selection:bg-secondary/20 overflow-x-hidden w-full flex flex-col">
-      <Hero />
-      <Invitation />
-      <Details />
-      <Story />
-      <Proposal />
-      <Travel />
-      <RSVPSection onOpen={openRSVP} />
-      <Footer />
-    </div>
+    <AnimatePresence mode="wait" initial={false}>
+      {!invitationOpened ? (
+        <EnvelopeWelcome key="envelope-welcome" onOpen={() => setInvitationOpened(true)} />
+      ) : (
+        <motion.div
+          key="wedding-site"
+          initial={{ y: "100vh", opacity: 0, scale: 0.96 }}
+          animate={{ y: 0, opacity: 1, scale: 1 }}
+          transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
+          className="min-h-[100dvh] bg-background text-foreground antialiased selection:bg-secondary/20 overflow-x-hidden w-full flex flex-col"
+        >
+          <Hero />
+          <Invitation />
+          <Details />
+          <Story />
+          <Proposal />
+          <Travel />
+          <RSVPSection onOpen={openRSVP} />
+          <Footer />
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 }

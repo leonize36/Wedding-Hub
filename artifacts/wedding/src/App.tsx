@@ -8,10 +8,7 @@ import imgDetails from "@assets/image_1779865802438.png";
 import imgProposal from "@assets/image_1779863655562.png";
 import imgGallery1 from "@assets/image_1779863578646.png";
 import imgGallery2 from "@assets/image_1779863595305.png";
-import imgGallery3 from "@assets/image_1779863617881.png";
-import imgGallery4 from "@assets/image_1779863625991.png";
 import imgGallery5 from "@assets/image_1779863632913.png";
-import imgGallery6 from "@assets/image_1779863644908.png";
 
 const fadeUp: Variants = {
   hidden: { opacity: 0, y: 40 },
@@ -206,35 +203,13 @@ function Story() {
           >
             <img src={imgGallery2} alt="Showing ring" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
           </motion.div>
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ delay: 0.2 }}
-            className="row-span-2 col-span-1 relative group overflow-hidden"
-          >
-            <img src={imgGallery3} alt="Fist pump" className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105" />
-          </motion.div>
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ delay: 0.3 }}
-            className="row-span-1 col-span-1 relative group overflow-hidden"
-          >
-            <img src={imgGallery4} alt="Bridal carry" className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105" />
-          </motion.div>
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ delay: 0.4 }}
-            className="row-span-1 col-span-1 relative group overflow-hidden"
-          >
-            <img src={imgGallery6} alt="Laughing by river" className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105" />
-          </motion.div>
         </div>
 
         {/* Mobile Gallery */}
         <div className="flex flex-col gap-6 md:hidden">
           <img src={imgGallery1} alt="Dancing in garden" className="w-full h-auto aspect-square object-cover shadow-sm" />
           <p className="text-center font-serif text-primary italic text-lg px-6">Every day with you is a dance.</p>
-          <img src={imgGallery3} alt="Fist pump" className="w-full h-auto aspect-[4/5] object-cover shadow-sm" />
-          <img src={imgGallery4} alt="Bridal carry" className="w-full h-auto aspect-square object-cover shadow-sm" />
-          <p className="text-center font-serif text-primary italic text-lg px-6">Ready for our greatest adventure yet.</p>
           <img src={imgGallery2} alt="Showing ring" className="w-full h-auto aspect-[4/5] object-cover shadow-sm" />
-          <img src={imgGallery6} alt="Laughing by river" className="w-full h-auto aspect-square object-cover shadow-sm" />
         </div>
       </div>
     </section>

@@ -243,15 +243,15 @@ function VideoMoment() {
           whileInView={{ opacity: 1, y: 0, rotate: 0 }}
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.8 }}
-          className="mx-auto w-full max-w-[360px] bg-primary p-2 shadow-2xl"
+          className="mx-auto aspect-[16/9] w-full max-w-3xl bg-primary p-2 shadow-2xl"
         >
           <video
-            src="/videos/enage-video-flipped.mp4"
+            src="/videos/enage-video-landscape.mp4"
             controls
             playsInline
             preload="metadata"
             aria-label="A video memory from JJ and Leonize"
-            className="aspect-[9/16] h-auto w-full object-cover"
+            className="h-full w-full bg-[#192219] object-contain"
           />
         </motion.div>
       </div>

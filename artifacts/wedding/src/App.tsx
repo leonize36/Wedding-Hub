@@ -241,6 +241,49 @@ function Story() {
   );
 }
 
+function VideoMoment() {
+  return (
+    <section className="py-20 md:py-32 bg-accent/40 overflow-hidden">
+      <div className="max-w-5xl mx-auto px-6 grid md:grid-cols-[0.8fr_1.2fr] gap-12 md:gap-20 items-center">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-50px" }}
+          variants={stagger}
+          className="text-center md:text-left"
+        >
+          <motion.span variants={fadeUp} className="font-script text-secondary text-4xl md:text-5xl mb-2 block">
+            A little film
+          </motion.span>
+          <motion.h2 variants={fadeUp} className="font-serif text-4xl md:text-5xl text-primary mb-6">
+            Moments we love
+          </motion.h2>
+          <motion.p variants={fadeUp} className="font-sans text-foreground/70 leading-loose max-w-md mx-auto md:mx-0">
+            A moving memory from our journey together, shared with you before the celebrations begin.
+          </motion.p>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 24, rotate: 2 }}
+          whileInView={{ opacity: 1, y: 0, rotate: 0 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.8 }}
+          className="mx-auto w-full max-w-[360px] bg-primary p-2 shadow-2xl"
+        >
+          <video
+            src="/videos/enage-video-flipped.mp4"
+            controls
+            playsInline
+            preload="metadata"
+            aria-label="A video memory from JJ and Leonize"
+            className="aspect-[9/16] h-auto w-full object-cover"
+          />
+        </motion.div>
+      </div>
+    </section>
+  );
+}
+
 function Proposal() {
   return (
     <section className="py-20 md:py-32 bg-primary text-background relative overflow-hidden">
@@ -425,13 +468,28 @@ function RSVPPage({ onBack }: { onBack: () => void }) {
     attending: "",
     dietary: [] as string[],
     dietaryNote: "",
-    song: "",
+    song: [""],
     cryFirst: "",
     activity: "",
     message: "",
   });
 
   const set = (field: string, value: string) => setForm(f => ({ ...f, [field]: value }));
+
+  const setSong = (index: number, value: string) => {
+    setForm(f => ({ ...f, song: f.song.map((song, i) => i === index ? value : song) }));
+  };
+
+  const addSong = () => {
+    setForm(f => ({ ...f, song: [...f.song, ""] }));
+  };
+
+  const removeSong = (index: number) => {
+    setForm(f => ({
+      ...f,
+      song: f.song.length === 1 ? [""] : f.song.filter((_, i) => i !== index),
+    }));
+  };
 
   const toggleDietary = (option: string) => {
     setForm(f => {
@@ -458,7 +516,7 @@ function RSVPPage({ onBack }: { onBack: () => void }) {
           attending: form.attending,
           dietary: form.dietary.join(", "),
           dietaryNote: form.dietaryNote,
-          song: form.song,
+          song: form.song.map(song => song.trim()).filter(Boolean).join("\n"),
           cryFirst: form.cryFirst,
           activity: form.activity,
           message: form.message,
@@ -567,10 +625,36 @@ function RSVPPage({ onBack }: { onBack: () => void }) {
                   />
 
                   <SectionDivider label="Dance Floor" />
-                  <FieldLabel>What song will get you on the dance floor?</FieldLabel>
-                  <input value={form.song} onChange={e => set("song", e.target.value)}
-                    placeholder="Song title & artist..."
-                    className="w-full border border-border px-4 py-3 font-sans text-sm bg-background focus:outline-none focus:border-primary transition-colors min-h-[44px]" />
+                  <FieldLabel>Which songs will get you on the dance floor?</FieldLabel>
+                  <div className="flex flex-col gap-3">
+                    {form.song.map((song, index) => (
+                      <div key={index} className="flex items-center gap-2">
+                        <input
+                          value={song}
+                          onChange={e => setSong(index, e.target.value)}
+                          placeholder={index === 0 ? "Song title & artist..." : "Another song title & artist..."}
+                          className="min-h-[44px] w-full border border-border bg-background px-4 py-3 font-sans text-sm transition-colors focus:border-primary focus:outline-none"
+                        />
+                        {form.song.length > 1 && (
+                          <button
+                            type="button"
+                            onClick={() => removeSong(index)}
+                            aria-label={`Remove song ${index + 1}`}
+                            className="flex h-11 w-11 shrink-0 items-center justify-center border border-border font-sans text-xl text-foreground/50 transition-colors hover:border-primary hover:text-primary"
+                          >
+                            &minus;
+                          </button>
+                        )}
+                      </div>
+                    ))}
+                    <button
+                      type="button"
+                      onClick={addSong}
+                      className="self-start border-b border-primary pb-1 font-sans text-xs uppercase tracking-[0.16em] text-primary transition-colors hover:border-secondary hover:text-secondary"
+                    >
+                      + Add another song
+                    </button>
+                  </div>
 
                   <SectionDivider label="Just for Fun" />
                   <div className="flex flex-col gap-8">
@@ -743,6 +827,7 @@ export default function App() {
           <Invitation />
           <Details />
           <Story />
+          <VideoMoment />
           <Proposal />
           <Travel />
           <RSVPSection onOpen={openRSVP} />

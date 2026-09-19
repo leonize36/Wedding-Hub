@@ -746,6 +746,8 @@ function EnvelopeWelcome({ onOpen }: { onOpen: () => void }) {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0, scale: 1.04, transition: { duration: 0.4 } }}
     >
+      <img className="welcome-baby-breath welcome-baby-breath-left" src="/images/baby-breath-cutout.png" alt="" aria-hidden="true" />
+      <img className="welcome-baby-breath welcome-baby-breath-right" src="/images/baby-breath-cutout.png" alt="" aria-hidden="true" />
       <div className={`welcome-envelope ${isOpening ? "is-opening" : ""}`}>
         <div className="welcome-letter" aria-hidden="true">
           <div className="welcome-letter-inner">
@@ -763,9 +765,9 @@ function EnvelopeWelcome({ onOpen }: { onOpen: () => void }) {
           disabled={isOpening}
           aria-label="Open the wedding invitation"
         >
-          <span>JJ</span>
-          <strong>&amp;</strong>
-          <span>L</span>
+          <span className="seal-ornament seal-ornament-top">❧</span>
+          <span className="seal-monogram"><span>J</span><small>&amp;</small><span>L</span></span>
+          <span className="seal-ornament seal-ornament-bottom">❧</span>
         </button>
       </div>
 

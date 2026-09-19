@@ -136,7 +136,7 @@
   justify-content: center;
   overflow: hidden;
   background:
-    radial-gradient(circle at 50% 38%, rgba(255, 255, 255, 0.08), transparent 34rem),
+    radial-gradient(ellipse at 50% 38%, rgba(204, 175, 137, 0.2), transparent 34rem),
     hsl(var(--primary));
   color: hsl(var(--background));
 }
@@ -168,6 +168,29 @@
   perspective: 1600px;
   isolation: isolate;
   filter: drop-shadow(0 34px 30px rgba(0, 0, 0, 0.22));
+}
+
+.welcome-baby-breath {
+  position: absolute;
+  z-index: 0;
+  width: min(34vw, 430px);
+  height: min(46vw, 560px);
+  object-fit: contain;
+  opacity: 0.76;
+  pointer-events: none;
+  filter: sepia(0.08) saturate(0.7) contrast(0.9) brightness(1.1);
+}
+
+.welcome-baby-breath-left {
+  bottom: 8%;
+  left: calc(50% - min(47vw, 590px));
+  transform: rotate(-18deg);
+}
+
+.welcome-baby-breath-right {
+  right: calc(50% - min(47vw, 590px));
+  bottom: 13%;
+  transform: scaleX(-1) rotate(-18deg);
 }
 
 .welcome-letter,
@@ -211,16 +234,20 @@
   z-index: 1;
   bottom: 0;
   height: 100%;
-  background: #d9e2d4;
+  background:
+    repeating-linear-gradient(112deg, rgba(101, 77, 48, 0.045) 0 1px, transparent 1px 5px),
+    linear-gradient(135deg, #eee3d2 0%, #e3d3bd 52%, #d8c3a7 100%);
 }
 
 .welcome-envelope-pocket {
   z-index: 3;
   bottom: 0;
   height: 78%;
-  background: #c7d5c2;
+  background:
+    repeating-linear-gradient(112deg, rgba(101, 77, 48, 0.06) 0 1px, transparent 1px 5px),
+    linear-gradient(135deg, #ddcbb3 0%, #d2b99b 100%);
   clip-path: polygon(0 0, 50% 58%, 100% 0, 100% 100%, 0 100%);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.28);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.38);
 }
 
 .welcome-envelope-flap {
@@ -228,7 +255,9 @@
   top: 0;
   height: 61%;
   transform-origin: top center;
-  background: #e5ece1;
+  background:
+    repeating-linear-gradient(112deg, rgba(101, 77, 48, 0.035) 0 1px, transparent 1px 5px),
+    linear-gradient(135deg, #f1e8da 0%, #e7d9c6 100%);
   clip-path: polygon(0 0, 100% 0, 50% 100%);
   backface-visibility: visible;
   transition: transform 850ms cubic-bezier(0.22, 1, 0.36, 1), z-index 0s 400ms;
@@ -246,22 +275,72 @@
   align-items: center;
   justify-content: center;
   transform: translate(-50%, -50%);
-  border: 3px solid rgba(255, 250, 240, 0.76);
-  border-radius: 999px;
-  background: hsl(var(--primary));
-  color: hsl(var(--background));
+  border: 3px solid #8b5d35;
+  border-radius: 48% 52% 50% 50% / 44% 44% 56% 56%;
+  background:
+    radial-gradient(ellipse at 35% 24%, rgba(255, 231, 185, 0.58), transparent 30%),
+    radial-gradient(ellipse at 62% 74%, rgba(93, 51, 25, 0.28), transparent 48%),
+    linear-gradient(135deg, #c99358 0%, #9a6437 46%, #b77d45 100%);
+  color: #f4d9b6;
   font-family: var(--app-font-serif);
   font-size: clamp(1rem, 2vw, 1.45rem);
-  line-height: 0.9;
-  box-shadow: 0 8px 18px rgba(35, 59, 38, 0.22);
+  line-height: 1;
+  box-shadow:
+    inset 0 0 0 3px rgba(252, 222, 177, 0.3),
+    inset 0 -5px 7px rgba(77, 41, 22, 0.3),
+    0 8px 18px rgba(68, 39, 20, 0.3);
   cursor: pointer;
   transition: transform 500ms ease, opacity 400ms ease;
 }
 
-.welcome-seal strong {
-  color: hsl(var(--secondary));
-  font-size: 0.72em;
-  font-weight: 400;
+.welcome-seal::before {
+  position: absolute;
+  inset: 8px;
+  border: 1px solid rgba(255, 224, 177, 0.7);
+  border-radius: inherit;
+  content: "";
+  box-shadow: inset 0 0 0 1px rgba(91, 50, 25, 0.22);
+}
+
+.welcome-seal::after {
+  position: absolute;
+  inset: 13px;
+  border: 1px solid rgba(103, 56, 28, 0.35);
+  border-radius: inherit;
+  content: "";
+}
+
+.seal-ornament {
+  position: relative;
+  z-index: 1;
+  font-family: Georgia, serif;
+  font-size: 0.95em;
+  line-height: 0.55;
+  color: #f3d2a4;
+  text-shadow: 1px 1px 0 rgba(91, 50, 25, 0.6);
+}
+
+.seal-ornament-bottom {
+  transform: rotate(180deg);
+}
+
+.seal-monogram {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 0.12em;
+  font-family: var(--app-font-serif);
+  font-size: 1.1em;
+  letter-spacing: -0.12em;
+  text-shadow: 1px 1px 0 rgba(91, 50, 25, 0.58);
+}
+
+.seal-monogram small {
+  margin: 0 0.1em;
+  color: #f0c38d;
+  font-size: 0.62em;
+  letter-spacing: 0;
 }
 
 .welcome-seal:hover {
@@ -296,6 +375,22 @@
 @media (max-width: 600px) {
   .welcome-envelope {
     width: min(92vw, 560px);
+  }
+
+  .welcome-baby-breath {
+    width: 48vw;
+    height: 60vw;
+    opacity: 0.62;
+  }
+
+  .welcome-baby-breath-left {
+    left: -18vw;
+    bottom: 10%;
+  }
+
+  .welcome-baby-breath-right {
+    right: -18vw;
+    bottom: 14%;
   }
 
   .welcome-letter {

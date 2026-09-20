@@ -702,7 +702,7 @@ function RSVPPage({ onBack }: { onBack: () => void }) {
   );
 }
 
-function playSealSound() {
+function playRevealSound() {
   try {
     const AudioContextConstructor =
       window.AudioContext ??
@@ -712,22 +712,56 @@ function playSealSound() {
 
     const audioContext = new AudioContextConstructor();
     const now = audioContext.currentTime;
-    const gain = audioContext.createGain();
-    const oscillator = audioContext.createOscillator();
+    const masterGain = audioContext.createGain();
 
-    oscillator.type = "triangle";
-    oscillator.frequency.setValueAtTime(180, now);
-    oscillator.frequency.exponentialRampToValueAtTime(82, now + 0.18);
+    masterGain.gain.setValueAtTime(0.0001, now);
+    masterGain.gain.exponentialRampToValueAtTime(0.18, now + 0.1);
+    masterGain.gain.exponentialRampToValueAtTime(0.0001, now + 1.25);
+    masterGain.connect(audioContext.destination);
 
-    gain.gain.setValueAtTime(0.0001, now);
-    gain.gain.exponentialRampToValueAtTime(0.22, now + 0.012);
-    gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.3);
+    const notes = [
+      { frequency: 523.25, start: 0, duration: 0.72 },
+      { frequency: 659.25, start: 0.14, duration: 0.78 },
+      { frequency: 783.99, start: 0.28, duration: 0.86 },
+      { frequency: 1046.5, start: 0.44, duration: 1.05 },
+    ];
 
-    oscillator.connect(gain);
-    gain.connect(audioContext.destination);
-    oscillator.addEventListener("ended", () => void audioContext.close());
-    oscillator.start(now);
-    oscillator.stop(now + 0.3);
+    notes.forEach(({ frequency, start, duration }) => {
+      const oscillator = audioContext.createOscillator();
+      const noteGain = audioContext.createGain();
+      const noteStart = now + start;
+
+      oscillator.type = "sine";
+      oscillator.frequency.setValueAtTime(frequency, noteStart);
+      oscillator.detune.setValueAtTime(-4, noteStart);
+
+      noteGain.gain.setValueAtTime(0.0001, noteStart);
+      noteGain.gain.exponentialRampToValueAtTime(0.15, noteStart + 0.025);
+      noteGain.gain.exponentialRampToValueAtTime(0.0001, noteStart + duration);
+
+      oscillator.connect(noteGain);
+      noteGain.connect(masterGain);
+      oscillator.start(noteStart);
+      oscillator.stop(noteStart + duration + 0.05);
+    });
+
+    const sparkle = audioContext.createOscillator();
+    const sparkleGain = audioContext.createGain();
+    const sparkleStart = now + 0.48;
+
+    sparkle.type = "triangle";
+    sparkle.frequency.setValueAtTime(1567.98, sparkleStart);
+    sparkle.frequency.exponentialRampToValueAtTime(2093, sparkleStart + 0.42);
+    sparkleGain.gain.setValueAtTime(0.0001, sparkleStart);
+    sparkleGain.gain.exponentialRampToValueAtTime(0.07, sparkleStart + 0.035);
+    sparkleGain.gain.exponentialRampToValueAtTime(0.0001, sparkleStart + 0.52);
+
+    sparkle.connect(sparkleGain);
+    sparkleGain.connect(masterGain);
+    sparkle.start(sparkleStart);
+    sparkle.stop(sparkleStart + 0.55);
+
+    window.setTimeout(() => void audioContext.close(), 1500);
   } catch {
     // The invitation still opens if Web Audio is unavailable.
   }
@@ -738,7 +772,7 @@ function EnvelopeWelcome({ onOpen }: { onOpen: () => void }) {
 
   const handleOpen = () => {
     if (isOpening) return;
-    playSealSound();
+    playRevealSound();
     setIsOpening(true);
     window.setTimeout(() => {
       window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });

@@ -6,7 +6,6 @@ import imgHero from "@assets/image_1779865765353.png";
 import imgWine from "@assets/image_1779863650532.png";
 import imgDetails from "@assets/image_1779865802438.png";
 import imgProposal from "@assets/image_1779863655562.png";
-import imgJourney from "@assets/image_1789888957699.png";
 
 const fadeUp: Variants = {
   hidden: { opacity: 0, y: 40 },
@@ -215,33 +214,9 @@ function Story() {
         >
           <motion.span variants={fadeUp} className="font-script text-secondary text-4xl md:text-5xl mb-2 block">Our Story</motion.span>
           <motion.h2 variants={fadeUp} className="font-serif text-4xl md:text-5xl text-primary mb-6">Six Years, One Forever</motion.h2>
-          <motion.p variants={fadeUp} className="font-sans text-foreground/70 leading-loose max-w-2xl mx-auto px-4">
-            From studying Industrial Engineering together to long-distance love, our journey has brought us through six years of friendship, growing together and choosing each other. Now, we are finally getting married.
-          </motion.p>
         </motion.div>
 
-        <div className="grid lg:grid-cols-[0.8fr_1.2fr] gap-14 md:gap-20 items-start">
-          <motion.div
-            initial={{ opacity: 0, x: -24 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="relative max-w-md mx-auto lg:mx-0"
-          >
-            <div className="relative overflow-hidden bg-accent/30 p-3 shadow-xl">
-              <img
-                src={imgJourney}
-                alt="JJ and Leonize laughing together in a garden"
-                className="w-full aspect-[2/3] object-cover"
-              />
-              <div className="absolute inset-3 ring-1 ring-inset ring-white/60" />
-            </div>
-            <p className="font-serif text-primary italic text-xl text-center mt-6">
-              Six years of friendship, love and choosing each other.
-            </p>
-            <div className="absolute -bottom-8 -left-8 w-32 h-32 bg-secondary/10 -z-10 rounded-full blur-2xl" />
-          </motion.div>
-
+        <div className="max-w-4xl mx-auto">
           <div className="relative">
             <div className="absolute left-3 md:left-4 top-3 bottom-3 w-px bg-secondary/30" aria-hidden="true" />
             <div className="space-y-10 md:space-y-12">

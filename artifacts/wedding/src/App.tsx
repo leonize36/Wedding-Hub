@@ -30,7 +30,7 @@ const journeyMilestones = [
     date: "2020",
     title: "Where it all began",
     description:
-      "Our story started at a university residence function, where a friend introduced us because we were both studying Industrial Engineering and thought we should know each other."
+      "Our journey started when we studied Industrial Engineering together."
   },
   {
     date: "9 September 2022",
@@ -216,7 +216,7 @@ function Story() {
           <motion.span variants={fadeUp} className="font-script text-secondary text-4xl md:text-5xl mb-2 block">Our Story</motion.span>
           <motion.h2 variants={fadeUp} className="font-serif text-4xl md:text-5xl text-primary mb-6">Six Years, One Forever</motion.h2>
           <motion.p variants={fadeUp} className="font-sans text-foreground/70 leading-loose max-w-2xl mx-auto px-4">
-            From a university residence function to long-distance love, our journey has brought us through six years of friendship, growing together and choosing each other. Now, we are finally getting married.
+            From studying Industrial Engineering together to long-distance love, our journey has brought us through six years of friendship, growing together and choosing each other. Now, we are finally getting married.
           </motion.p>
         </motion.div>
 

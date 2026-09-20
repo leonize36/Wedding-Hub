@@ -6,9 +6,7 @@ import imgHero from "@assets/image_1779865765353.png";
 import imgWine from "@assets/image_1779863650532.png";
 import imgDetails from "@assets/image_1779865802438.png";
 import imgProposal from "@assets/image_1779863655562.png";
-import imgGallery1 from "@assets/image_1779863578646.png";
-import imgGallery2 from "@assets/image_1779863595305.png";
-import imgGallery5 from "@assets/image_1779863632913.png";
+import imgJourney from "@assets/image_1789888957699.png";
 
 const fadeUp: Variants = {
   hidden: { opacity: 0, y: 40 },
@@ -26,6 +24,39 @@ const stagger = {
     }
   }
 };
+
+const journeyMilestones = [
+  {
+    date: "2020",
+    title: "Where it all began",
+    description:
+      "Our story started at a university residence function, where a friend introduced us because we were both studying Industrial Engineering and thought we should know each other."
+  },
+  {
+    date: "9 September 2022",
+    title: "More than friends",
+    description:
+      "After being friends for quite some time, our friendship turned into something more. On 9 September 2022, we officially started dating."
+  },
+  {
+    date: "January 2025",
+    title: "Love across the kilometres",
+    description:
+      "Life took us into a long-distance chapter, with trips between Klerksdorp and Cape Town, plenty of goodbyes, reunions and kilometres in between."
+  },
+  {
+    date: "August 2026",
+    title: "Home together",
+    description:
+      "The distance finally came to an end when Leonize got a job in Cape Town. After years of friendship, love and travelling, we could finally build our everyday life together."
+  },
+  {
+    date: "20 March 2027",
+    title: "Finally, forever",
+    description:
+      "After six beautiful years of growing together, we are finally getting married — and we cannot wait to celebrate this next chapter with you."
+  }
+];
 
 function Hero() {
   const { scrollY } = useScroll();
@@ -183,33 +214,56 @@ function Story() {
           className="text-center mb-16 md:mb-24"
         >
           <motion.span variants={fadeUp} className="font-script text-secondary text-4xl md:text-5xl mb-2 block">Our Story</motion.span>
-          <motion.h2 variants={fadeUp} className="font-serif text-4xl md:text-5xl text-primary mb-6">A Beautiful Journey</motion.h2>
+          <motion.h2 variants={fadeUp} className="font-serif text-4xl md:text-5xl text-primary mb-6">Six Years, One Forever</motion.h2>
           <motion.p variants={fadeUp} className="font-sans text-foreground/70 leading-loose max-w-2xl mx-auto px-4">
-            From our first meeting to this beautiful moment, every step has been an adventure. We've built a life filled with laughter, support, and deep love. Here are a few glimpses of our journey together.
+            From a university residence function to long-distance love, our journey has brought us through six years of friendship, growing together and choosing each other. Now, we are finally getting married.
           </motion.p>
         </motion.div>
 
-        {/* Desktop Gallery */}
-        <div className="hidden md:grid grid-cols-3 gap-6 auto-rows-[250px]">
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }}
-            className="row-span-2 col-span-2 relative group overflow-hidden"
+        <div className="grid lg:grid-cols-[0.8fr_1.2fr] gap-14 md:gap-20 items-start">
+          <motion.div
+            initial={{ opacity: 0, x: -24 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="relative max-w-md mx-auto lg:mx-0"
           >
-            <img src={imgGallery1} alt="Dancing in garden" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+            <div className="relative overflow-hidden bg-accent/30 p-3 shadow-xl">
+              <img
+                src={imgJourney}
+                alt="JJ and Leonize laughing together in a garden"
+                className="w-full aspect-[2/3] object-cover"
+              />
+              <div className="absolute inset-3 ring-1 ring-inset ring-white/60" />
+            </div>
+            <p className="font-serif text-primary italic text-xl text-center mt-6">
+              Six years of friendship, love and choosing each other.
+            </p>
+            <div className="absolute -bottom-8 -left-8 w-32 h-32 bg-secondary/10 -z-10 rounded-full blur-2xl" />
           </motion.div>
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ delay: 0.1 }}
-            className="row-span-1 col-span-1 relative group overflow-hidden"
-          >
-            <img src={imgGallery2} alt="Showing ring" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-          </motion.div>
-        </div>
 
-        {/* Mobile Gallery */}
-        <div className="flex flex-col gap-6 md:hidden">
-          <img src={imgGallery1} alt="Dancing in garden" className="w-full h-auto aspect-square object-cover shadow-sm" />
-          <p className="text-center font-serif text-primary italic text-lg px-6">Every day with you is a dance.</p>
-          <img src={imgGallery2} alt="Showing ring" className="w-full h-auto aspect-[4/5] object-cover shadow-sm" />
+          <div className="relative">
+            <div className="absolute left-3 md:left-4 top-3 bottom-3 w-px bg-secondary/30" aria-hidden="true" />
+            <div className="space-y-10 md:space-y-12">
+              {journeyMilestones.map((milestone, index) => (
+                <motion.div
+                  key={milestone.date}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-40px" }}
+                  transition={{ duration: 0.6, delay: index * 0.08 }}
+                  className="relative pl-12 md:pl-16"
+                >
+                  <span className="absolute left-0 top-1.5 flex h-7 w-7 md:h-9 md:w-9 items-center justify-center rounded-full border border-secondary/60 bg-background">
+                    <span className="h-2.5 w-2.5 rounded-full bg-secondary" />
+                  </span>
+                  <p className="font-sans text-xs uppercase tracking-[0.2em] text-secondary mb-2">{milestone.date}</p>
+                  <h3 className="font-serif text-2xl md:text-3xl text-primary mb-2">{milestone.title}</h3>
+                  <p className="font-sans text-foreground/70 leading-relaxed max-w-xl">{milestone.description}</p>
+                </motion.div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </section>

@@ -343,14 +343,14 @@ function Proposal() {
 }
 
 const guesthouses = [
-  { name: "Butlers Crown / Home Away Guest House", address: "78 Dr Yusuf Dadoo Avenue, Klerksdorp", note: "Closest — on the same road as the venue" },
-  { name: "9 Wena Ave Guesthouse", address: "9 Wena Avenue, Klerksdorp", note: "Short distance from the venue" },
-  { name: "Ukarimu Guest House", address: "32 Marmer Street, Klerksdorp", note: "Comfortable local guesthouse" },
-  { name: "The Willow Tree Guest House", address: "33 Dr Yusuf Dadoo Avenue, Wilkoppies", note: "On the same main road as the venue" },
-  { name: "Villa Gracia Guesthouse", address: "Dr Yusuf Dadoo Avenue area, Klerksdorp", note: "Highly rated on Agoda" },
-  { name: "Gemstone Guest House Klerksdorp", address: "Klerksdorp", note: "±3.0 km from the venue" },
-  { name: "AnnVilla Guest House", address: "Klerksdorp", note: "±3.2 km from the venue" },
-  { name: "Villa Maria Guest Lodge", address: "Klerksdorp", note: "±3.5 km from the venue" },
+  { name: "Butlers Crown / Home Away Guest House", address: "78 Dr Yusuf Dadoo Avenue, Klerksdorp", note: "Closest — on the same road as the venue", mapQuery: "Butlers Crown Home Away Guest House, 78 Dr Yusuf Dadoo Avenue, Klerksdorp" },
+  { name: "9 Wena Ave Guesthouse", address: "9 Wena Avenue, Klerksdorp", note: "Short distance from the venue", mapQuery: "9 Wena Ave Guesthouse, 9 Wena Avenue, Klerksdorp" },
+  { name: "Ukarimu Guest House", address: "32 Marmer Street, Klerksdorp", note: "Comfortable local guesthouse", mapQuery: "Ukarimu Guest House, 32 Marmer Street, Klerksdorp" },
+  { name: "The Willow Tree Guest House", address: "33 Dr Yusuf Dadoo Avenue, Wilkoppies", note: "On the same main road as the venue", mapQuery: "The Willow Tree Guest House, 33 Dr Yusuf Dadoo Avenue, Wilkoppies, Klerksdorp" },
+  { name: "Villa Gracia Guesthouse", address: "Dr Yusuf Dadoo Avenue area, Klerksdorp", note: "Highly rated on Agoda", mapQuery: "Villa Gracia Guesthouse, Dr Yusuf Dadoo Avenue, Klerksdorp" },
+  { name: "Gemstone Guest House Klerksdorp", address: "Klerksdorp", note: "±3.0 km from the venue", mapQuery: "Gemstone Guest House Klerksdorp" },
+  { name: "AnnVilla Guest House", address: "Klerksdorp", note: "±3.2 km from the venue", mapQuery: "AnnVilla Guest House, Klerksdorp" },
+  { name: "Villa Maria Guest Lodge", address: "Klerksdorp", note: "±3.5 km from the venue", mapQuery: "Villa Maria Guest Lodge, Klerksdorp" },
 ];
 
 function Travel() {
@@ -389,6 +389,15 @@ function Travel() {
               </div>
               <p className="font-sans text-sm text-foreground/60">{g.address}</p>
               <p className="font-sans text-xs text-secondary italic mt-1">{g.note}</p>
+              <a
+                href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(g.mapQuery)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-3 self-start border-b border-primary/50 pb-0.5 font-sans text-xs uppercase tracking-widest text-primary transition-colors hover:border-secondary hover:text-secondary"
+                aria-label={`View ${g.name} on Google Maps`}
+              >
+                View on Google Maps ↗
+              </a>
             </motion.div>
           ))}
         </div>

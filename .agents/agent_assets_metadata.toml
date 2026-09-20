@@ -41,3 +41,18 @@ id = "N9Og_tqeseHogpfosZH5m"
 uri = "file://wedding-website.zip"
 type = "unspecified"
 title = "Wedding Website — Source Code"
+logical_id = "85ca931f-bf23-4d3e-bf7f-8f27214a2bb8"
+
+[[outputs]]
+id = "rhI7bP4sg-kmfOrT-vzTE"
+uri = "file://artifacts/api-server/rsvp-submissions.xlsx"
+type = "table"
+title = "Wedding RSVP responses"
+description = "Current RSVP responses in Excel format. Future successful RSVPs will be appended to this workbook automatically."
+logical_id = "d234972b-88ed-4977-90e7-8156d3a9369d"
+content_hash = "sha256:8bef4e49bfd2e3744434b5b15fdde26ff3cd6dc1e92ddd655d977e135b3f48f8"
+size = 7158
+mtime_ms = 1789886118065
+storage_uri = "gcs://replit-rams-assets-janeway/rams/assets/repl:d782e4cd-0cf1-4559-99b2-710459337ca6/d234972b-88ed-4977-90e7-8156d3a9369d/143f0359-c536-4cd7-ac23-0490d75e141b"
+storage_version_token = "1789886135864941"
+content_type = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"

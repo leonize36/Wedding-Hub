@@ -702,11 +702,43 @@ function RSVPPage({ onBack }: { onBack: () => void }) {
   );
 }
 
+function playSealSound() {
+  try {
+    const AudioContextConstructor =
+      window.AudioContext ??
+      (window as Window & { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
+
+    if (!AudioContextConstructor) return;
+
+    const audioContext = new AudioContextConstructor();
+    const now = audioContext.currentTime;
+    const gain = audioContext.createGain();
+    const oscillator = audioContext.createOscillator();
+
+    oscillator.type = "triangle";
+    oscillator.frequency.setValueAtTime(180, now);
+    oscillator.frequency.exponentialRampToValueAtTime(82, now + 0.18);
+
+    gain.gain.setValueAtTime(0.0001, now);
+    gain.gain.exponentialRampToValueAtTime(0.22, now + 0.012);
+    gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.3);
+
+    oscillator.connect(gain);
+    gain.connect(audioContext.destination);
+    oscillator.addEventListener("ended", () => void audioContext.close());
+    oscillator.start(now);
+    oscillator.stop(now + 0.3);
+  } catch {
+    // The invitation still opens if Web Audio is unavailable.
+  }
+}
+
 function EnvelopeWelcome({ onOpen }: { onOpen: () => void }) {
   const [isOpening, setIsOpening] = useState(false);
 
   const handleOpen = () => {
     if (isOpening) return;
+    playSealSound();
     setIsOpening(true);
     window.setTimeout(() => {
       window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });

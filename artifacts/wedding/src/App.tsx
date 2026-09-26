@@ -373,16 +373,16 @@ const dietaryOptions = [
   "Other",
 ];
 
-function RadioCard({ name, value, checked, onChange, children }: {
+function RadioCard({ name, value, checked, onChange, required, children }: {
   name: string; value: string; checked: boolean;
-  onChange: (v: string) => void; children: React.ReactNode;
+  onChange: (v: string) => void; required?: boolean; children: React.ReactNode;
 }) {
   return (
     <label className={`flex items-center gap-3 px-4 py-3 border cursor-pointer transition-all duration-200 select-none ${checked ? "border-primary bg-primary/5 text-primary font-medium" : "border-border bg-background text-foreground/70 hover:border-primary/40"}`}>
       <span className={`w-4 h-4 shrink-0 rounded-full border-2 flex items-center justify-center transition-colors ${checked ? "border-primary" : "border-border"}`}>
         {checked && <span className="w-2 h-2 rounded-full bg-primary block" />}
       </span>
-      <input type="radio" name={name} value={value} checked={checked} onChange={() => onChange(value)} className="sr-only" />
+      <input type="radio" name={name} value={value} checked={checked} required={required} onChange={() => onChange(value)} className="sr-only" />
       <span className="font-sans text-sm leading-snug">{children}</span>
     </label>
   );
@@ -500,6 +500,16 @@ function RSVPPage({ onBack }: { onBack: () => void }) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    const name = form.name.trim();
+    if (!name) {
+      setSubmitError("Please enter your full name.");
+      return;
+    }
+    if (form.attending !== "yes" && form.attending !== "no") {
+      setSubmitError("Please select whether you will be attending.");
+      return;
+    }
+
     setSubmitting(true);
     setSubmitError("");
     try {
@@ -507,7 +517,7 @@ function RSVPPage({ onBack }: { onBack: () => void }) {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          name: form.name,
+          name,
           phone: form.phone,
           email: form.email,
           attending: form.attending,
@@ -595,10 +605,10 @@ function RSVPPage({ onBack }: { onBack: () => void }) {
               <SectionDivider label="Attendance" />
               <FieldLabel>Are you joining us for the best day ever?</FieldLabel>
               <div className="flex flex-col gap-2">
-                <RadioCard name="attending" value="yes" checked={form.attending === "yes"} onChange={v => set("attending", v)}>
+                <RadioCard name="attending" value="yes" checked={form.attending === "yes"} required onChange={v => set("attending", v)}>
                   Yes, I/we will be there
                 </RadioCard>
-                <RadioCard name="attending" value="no" checked={form.attending === "no"} onChange={v => set("attending", v)}>
+                <RadioCard name="attending" value="no" checked={form.attending === "no"} required onChange={v => set("attending", v)}>
                   Sadly, I/we cannot attend
                 </RadioCard>
               </div>
@@ -713,7 +723,7 @@ function RSVPPage({ onBack }: { onBack: () => void }) {
                   disabled={submitting}
                   className="w-full md:w-auto bg-primary text-white px-12 py-4 font-sans text-sm uppercase tracking-[0.2em] hover:bg-primary/90 active:scale-[0.98] transition-all duration-200 shadow-md min-h-[52px] disabled:opacity-60 disabled:cursor-not-allowed"
                 >
-                  {submitting ? "Sending…" : "Count me in!"}
+                  {submitting ? "Sending…" : form.attending === "no" ? "Send Response" : "Count me in!"}
                 </button>
               </div>
 

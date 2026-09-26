@@ -99,22 +99,26 @@ async function saveExcelSubmissions(submissions: RsvpSubmission[]) {
 
 router.post("/rsvp", async (req, res) => {
   const body = req.body as Record<string, unknown>;
+  const name = typeof body.name === "string" ? body.name.trim() : "";
+  const attending = body.attending;
 
-  const required = ["name", "attending"];
-  for (const field of required) {
-    if (!body[field]) {
-      res.status(400).json({ error: `Missing required field: ${field}` });
-      return;
-    }
+  if (!name) {
+    res.status(400).json({ error: "Missing required field: name" });
+    return;
+  }
+
+  if (attending !== "yes" && attending !== "no") {
+    res.status(400).json({ error: "Please select whether you will be attending." });
+    return;
   }
 
   const submission: RsvpSubmission = {
     id: Date.now(),
     submittedAt: new Date().toISOString(),
-    name: body.name,
+    name,
     phone: body.phone ?? "",
     email: body.email ?? "",
-    attending: body.attending,
+    attending,
     dietary: body.dietary ?? "",
     dietaryNote: body.dietaryNote ?? "",
     song: body.song ?? "",

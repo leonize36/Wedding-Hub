@@ -248,25 +248,7 @@ function Story() {
 function VideoMoment() {
   return (
     <section className="py-20 md:py-32 bg-accent/40 overflow-hidden">
-      <div className="max-w-5xl mx-auto px-6 grid md:grid-cols-[0.8fr_1.2fr] gap-12 md:gap-20 items-center">
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-50px" }}
-          variants={stagger}
-          className="text-center md:text-left"
-        >
-          <motion.span variants={fadeUp} className="font-script text-secondary text-4xl md:text-5xl mb-2 block">
-            A little film
-          </motion.span>
-          <motion.h2 variants={fadeUp} className="font-serif text-4xl md:text-5xl text-primary mb-6">
-            Moments we love
-          </motion.h2>
-          <motion.p variants={fadeUp} className="font-sans text-foreground/70 leading-loose max-w-md mx-auto md:mx-0">
-            A moving memory from our journey together, shared with you before the celebrations begin.
-          </motion.p>
-        </motion.div>
-
+      <div className="max-w-5xl mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 24, rotate: 2 }}
           whileInView={{ opacity: 1, y: 0, rotate: 0 }}

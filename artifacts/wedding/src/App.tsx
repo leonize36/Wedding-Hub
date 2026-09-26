@@ -539,8 +539,11 @@ function RSVPSection({ onOpen }: { onOpen: () => void }) {
         <motion.p variants={fadeUp} className="font-sans text-white/70 mb-3 leading-relaxed">
           We cannot wait to celebrate with you. Please let us know if you will be joining us.
         </motion.p>
-        <motion.p variants={fadeUp} className="font-sans text-white/50 text-xs mb-10 italic">
-          Please RSVP before {rsvpDeadline} &mdash; only for guests listed on your invitation.
+        <motion.p
+          variants={fadeUp}
+          className="mx-auto mb-10 inline-flex border border-secondary/60 bg-white/10 px-5 py-3 font-sans text-sm font-semibold uppercase tracking-[0.14em] text-white shadow-sm md:text-base"
+        >
+          Please RSVP before {rsvpDeadline}
         </motion.p>
         <motion.div variants={fadeUp}>
           <button
@@ -668,8 +671,9 @@ function RSVPPage({ onBack }: { onBack: () => void }) {
           <div className="text-center mb-10">
             <span className="font-script text-secondary text-4xl block mb-2">Join Us</span>
             <h1 className="font-serif text-4xl md:text-5xl text-primary mb-3">RSVP</h1>
-            <p className="font-sans text-foreground/50 text-xs italic">Please only RSVP for the guests listed on your invitation.</p>
-            <p className="font-sans text-secondary text-xs italic mt-2">Please RSVP before {rsvpDeadline}.</p>
+            <p className="mt-4 inline-flex border border-secondary/50 bg-secondary/10 px-4 py-2 font-sans text-sm font-semibold uppercase tracking-[0.12em] text-primary">
+              Please RSVP before {rsvpDeadline}
+            </p>
           </div>
 
           {submitted ? (

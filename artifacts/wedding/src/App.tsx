@@ -410,66 +410,16 @@ function Travel() {
   );
 }
 
-const pastelColours = [
-  { name: "Blush", colour: "#f3d4d1" },
-  { name: "Peach", colour: "#f3c7a8" },
-  { name: "Lilac", colour: "#d7c6e6" },
-  { name: "Mint", colour: "#c7ded4" },
-  { name: "Sage", colour: "#b7c6b5" },
-  { name: "Sky blue", colour: "#c4d4e8" },
-  { name: "Butter yellow", colour: "#f3dfaa" },
-  { name: "Champagne", colour: "#e8d7c1" },
-];
-
 function Attire() {
   return (
     <section id="attire" className="scroll-mt-20 bg-background px-6 py-20 md:py-32">
-      <div className="mx-auto grid max-w-6xl items-center gap-12 md:gap-16 lg:grid-cols-[0.9fr_1.1fr]">
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-50px" }}
-          variants={stagger}
-        >
-          <motion.span variants={fadeUp} className="mb-2 block font-script text-4xl text-secondary md:text-5xl">
-            Dress to celebrate
-          </motion.span>
-          <motion.h2 variants={fadeUp} className="mb-6 font-serif text-4xl text-primary md:text-5xl">
-            What to Wear
-          </motion.h2>
-          <motion.p variants={fadeUp} className="max-w-xl font-sans leading-loose text-foreground/70">
-            Our dress code is <span className="font-semibold text-primary">semi-formal</span> in soft pastel colours. Think elegant dresses, jumpsuits, suits or blazers in cheerful, timeless shades.
-          </motion.p>
-
-          <motion.div variants={fadeUp} className="mt-8">
-            <p className="mb-4 font-sans text-xs uppercase tracking-[0.2em] text-secondary">Pastel palette</p>
-            <div className="flex flex-wrap gap-3">
-              {pastelColours.map(({ name, colour }) => (
-                <div key={name} className="flex items-center gap-2 font-sans text-xs text-foreground/70">
-                  <span
-                    className="h-6 w-6 rounded-full border border-black/10 shadow-sm"
-                    style={{ backgroundColor: colour }}
-                    aria-hidden="true"
-                  />
-                  {name}
-                </div>
-              ))}
-            </div>
-          </motion.div>
-
-          <motion.div variants={fadeUp} className="mt-8 border-l-2 border-secondary/50 pl-5">
-            <p className="font-serif text-lg italic text-primary">
-              Please leave white for the bride and black, neon or very dark colours at home.
-            </p>
-          </motion.div>
-        </motion.div>
-
+      <div className="mx-auto max-w-4xl">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.8 }}
-          className="mx-auto w-full max-w-xl overflow-hidden bg-accent/40 p-2 shadow-xl"
+          className="mx-auto w-full overflow-hidden bg-accent/40 p-2 shadow-xl"
         >
           <img
             src={imgAttire}

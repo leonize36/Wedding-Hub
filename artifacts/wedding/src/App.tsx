@@ -296,6 +296,24 @@ function VideoMoment() {
     <section className="py-20 md:py-32 bg-accent/40 overflow-hidden">
       <div className="max-w-5xl mx-auto px-6">
         <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-50px" }}
+          variants={stagger}
+          className="text-center mb-10 md:mb-12"
+        >
+          <motion.span variants={fadeUp} className="font-script text-secondary text-4xl md:text-5xl mb-2 block">
+            A little snapshot
+          </motion.span>
+          <motion.h2 variants={fadeUp} className="font-serif text-4xl md:text-5xl text-primary">
+            Of Us
+          </motion.h2>
+          <motion.p variants={fadeUp} className="font-sans text-foreground/65 mt-4">
+            A small glimpse into our journey together.
+          </motion.p>
+        </motion.div>
+
+        <motion.div
           initial={{ opacity: 0, y: 24, rotate: 2 }}
           whileInView={{ opacity: 1, y: 0, rotate: 0 }}
           viewport={{ once: true, margin: "-50px" }}

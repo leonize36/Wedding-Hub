@@ -124,6 +124,46 @@ function Hero() {
   );
 }
 
+function SectionNav({ onOpenRSVP }: { onOpenRSVP: () => void }) {
+  return (
+    <nav
+      aria-label="Wedding sections"
+      className="sticky top-0 z-40 border-b border-border bg-background/95 shadow-sm backdrop-blur-md"
+    >
+      <div className="mx-auto flex max-w-6xl items-center gap-4 px-4 md:px-6">
+        <span className="hidden shrink-0 font-script text-2xl text-primary sm:block">JJ &amp; Leonize</span>
+        <div className="flex min-w-0 flex-1 items-center justify-center gap-1 overflow-x-auto py-3 md:gap-3">
+          <a
+            href="#story"
+            className="shrink-0 whitespace-nowrap px-3 py-2 font-sans text-[11px] uppercase tracking-[0.14em] text-foreground/65 transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary"
+          >
+            Our Story
+          </a>
+          <a
+            href="#details"
+            className="shrink-0 whitespace-nowrap px-3 py-2 font-sans text-[11px] uppercase tracking-[0.14em] text-foreground/65 transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary"
+          >
+            The Day
+          </a>
+          <a
+            href="#stay"
+            className="shrink-0 whitespace-nowrap px-3 py-2 font-sans text-[11px] uppercase tracking-[0.14em] text-foreground/65 transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary"
+          >
+            Where to Stay
+          </a>
+        </div>
+        <button
+          type="button"
+          onClick={onOpenRSVP}
+          className="shrink-0 bg-primary px-4 py-2.5 font-sans text-[11px] uppercase tracking-[0.16em] text-white shadow-sm transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary md:px-5"
+        >
+          RSVP
+        </button>
+      </div>
+    </nav>
+  );
+}
+
 function Invitation() {
   return (
     <section className="py-20 md:py-32 px-6 md:px-12 max-w-4xl mx-auto text-center">
@@ -160,7 +200,7 @@ function Invitation() {
 
 function Details() {
   return (
-    <section className="py-20 md:py-32 bg-accent/40 relative overflow-hidden">
+    <section id="details" className="scroll-mt-20 py-20 md:py-32 bg-accent/40 relative overflow-hidden">
       <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-12 md:gap-24 items-center">
         <motion.div 
           initial="hidden"
@@ -203,7 +243,7 @@ function Details() {
 
 function Story() {
   return (
-    <section className="py-20 md:py-32 px-4 md:px-6">
+    <section id="story" className="scroll-mt-20 py-20 md:py-32 px-4 md:px-6">
       <div className="max-w-6xl mx-auto">
         <motion.div 
           initial="hidden"
@@ -312,7 +352,7 @@ const guesthouses = [
 
 function Travel() {
   return (
-    <section className="py-20 md:py-32 bg-accent/60 relative">
+    <section id="stay" className="scroll-mt-20 py-20 md:py-32 bg-accent/60 relative">
       <div className="max-w-5xl mx-auto px-6">
         <motion.div
           initial="hidden"
@@ -420,7 +460,7 @@ const rsvpDeadline = "20 December 2025";
 
 function RSVPSection({ onOpen }: { onOpen: () => void }) {
   return (
-    <section className="py-24 md:py-32 px-6 bg-primary text-white text-center">
+    <section id="rsvp" className="scroll-mt-20 py-24 md:py-32 px-6 bg-primary text-white text-center">
       <motion.div
         initial="hidden"
         whileInView="visible"
@@ -900,6 +940,7 @@ export default function App() {
           className="min-h-[100dvh] bg-background text-foreground antialiased selection:bg-secondary/20 overflow-x-hidden w-full flex flex-col"
         >
           <Hero />
+          <SectionNav onOpenRSVP={openRSVP} />
           <Invitation />
           <Details />
           <Story />

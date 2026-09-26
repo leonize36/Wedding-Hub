@@ -416,6 +416,8 @@ function SectionDivider({ label }: { label: string }) {
   );
 }
 
+const rsvpDeadline = "20 December 2025";
+
 function RSVPSection({ onOpen }: { onOpen: () => void }) {
   return (
     <section className="py-24 md:py-32 px-6 bg-primary text-white text-center">
@@ -432,7 +434,7 @@ function RSVPSection({ onOpen }: { onOpen: () => void }) {
           We cannot wait to celebrate with you. Please let us know if you will be joining us.
         </motion.p>
         <motion.p variants={fadeUp} className="font-sans text-white/50 text-xs mb-10 italic">
-          Please RSVP by 10 January &mdash; only for guests listed on your invitation.
+          Please RSVP before {rsvpDeadline} &mdash; only for guests listed on your invitation.
         </motion.p>
         <motion.div variants={fadeUp}>
           <button
@@ -551,6 +553,7 @@ function RSVPPage({ onBack }: { onBack: () => void }) {
             <span className="font-script text-secondary text-4xl block mb-2">Join Us</span>
             <h1 className="font-serif text-4xl md:text-5xl text-primary mb-3">RSVP</h1>
             <p className="font-sans text-foreground/50 text-xs italic">Please only RSVP for the guests listed on your invitation.</p>
+            <p className="font-sans text-secondary text-xs italic mt-2">Please RSVP before {rsvpDeadline}.</p>
           </div>
 
           {submitted ? (

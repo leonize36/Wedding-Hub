@@ -361,6 +361,48 @@
   cursor: default;
 }
 
+.welcome-confetti {
+  position: absolute;
+  z-index: 6;
+  top: 45%;
+  left: 50%;
+  width: 1px;
+  height: 1px;
+  pointer-events: none;
+}
+
+.welcome-confetti-piece {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 7px;
+  height: 12px;
+  border-radius: 1px;
+  opacity: 0;
+  transform-origin: center;
+  animation: welcome-confetti-burst 950ms cubic-bezier(0.18, 0.82, 0.32, 1) var(--confetti-delay) forwards;
+}
+
+@keyframes welcome-confetti-burst {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) rotate(0deg) scale(0.75);
+  }
+
+  65% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(
+      calc(-50% + var(--confetti-x)),
+      calc(-50% + var(--confetti-y))
+    ) rotate(var(--confetti-rotation)) scale(0.9);
+  }
+}
+
 .welcome-envelope.is-opening .welcome-letter {
   opacity: 1;
   transform: translateY(-34%);
@@ -410,7 +452,9 @@
 @media (prefers-reduced-motion: reduce) {
   .welcome-letter,
   .welcome-envelope-flap,
-  .welcome-seal {
+  .welcome-seal,
+  .welcome-confetti-piece {
     transition-duration: 1ms;
+    animation-duration: 1ms;
   }
 }

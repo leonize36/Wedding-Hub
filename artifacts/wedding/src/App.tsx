@@ -29,13 +29,13 @@ const journeyMilestones = [
     date: "2020",
     title: "Where it all began",
     description:
-      "Our journey started when we studied Industrial Engineering together."
+      "Our journey started when we studied Industrial Engineering together at NWU."
   },
   {
     date: "9 September 2022",
     title: "More than friends",
     description:
-      "After being friends for quite some time, our friendship turned into something more. On 9 September 2022, we officially started dating."
+      "After being friends for quite some time, our friendship turned into something more. On 9 September 2022, we officially started dating. Along the way, we shared countless picnics, tennis matches, movie nights, series marathons and study sessions."
   },
   {
     date: "January 2025",
@@ -47,7 +47,7 @@ const journeyMilestones = [
     date: "August 2026",
     title: "Home together",
     description:
-      "The distance finally came to an end when Leonize got a job in Cape Town. After years of friendship, love and travelling, we could finally build our everyday life together."
+      "The distance finally came to an end when Leonize moved to Cape Town. After years of friendship, love and travelling, we could finally build our everyday life together."
   },
   {
     date: "20 March 2027",
@@ -308,9 +308,6 @@ function VideoMoment() {
           <motion.h2 variants={fadeUp} className="font-serif text-4xl md:text-5xl text-primary">
             Of Us
           </motion.h2>
-          <motion.p variants={fadeUp} className="font-sans text-foreground/65 mt-4">
-            A small glimpse into our journey together.
-          </motion.p>
         </motion.div>
 
         <motion.div
@@ -321,7 +318,7 @@ function VideoMoment() {
           className="mx-auto aspect-[16/9] w-full max-w-3xl bg-primary p-2 shadow-2xl"
         >
           <video
-            src="/videos/enage-video-landscape.mp4"
+            src="/videos/enage-video-landscape-web.mp4"
             controls
             playsInline
             preload="metadata"
@@ -388,7 +385,7 @@ function Travel() {
           <motion.span variants={fadeUp} className="font-script text-secondary text-4xl md:text-5xl mb-2 block">Plan Your Stay</motion.span>
           <motion.h2 variants={fadeUp} className="font-serif text-4xl md:text-5xl text-primary mb-6">Where to Stay</motion.h2>
           <motion.p variants={fadeUp} className="font-sans text-foreground/70 leading-loose max-w-2xl mx-auto">
-            The Whitehouse is at 163 Dr Yusuf Dadoo Avenue, Klerksdorp. We have listed some nearby guesthouses for your convenience — book early to secure your spot.
+            We have listed some nearby guesthouses for your convenience — book early to secure your spot.
           </motion.p>
         </motion.div>
 
@@ -474,14 +471,6 @@ function Attire() {
           </div>
         </motion.div>
 
-        <motion.div
-          variants={fadeUp}
-          className="mx-auto mt-8 max-w-2xl border-l-2 border-secondary/50 pl-5 text-left"
-        >
-          <p className="font-serif text-lg italic text-primary">
-            Please leave white for the bride and black, neon or very dark colours at home.
-          </p>
-        </motion.div>
       </motion.div>
     </section>
   );
@@ -540,7 +529,7 @@ function SectionDivider({ label }: { label: string }) {
   );
 }
 
-const rsvpDeadline = "20 December 2025";
+const rsvpDeadline = "20 December 2026";
 
 function RSVPSection({ onOpen }: { onOpen: () => void }) {
   return (
@@ -586,9 +575,8 @@ function RSVPPage({ onBack }: { onBack: () => void }) {
   }, []);
 
   const [form, setForm] = useState({
-    name: "",
+    names: [""],
     phone: "",
-    email: "",
     attending: "",
     dietary: [] as string[],
     dietaryNote: "",
@@ -599,6 +587,21 @@ function RSVPPage({ onBack }: { onBack: () => void }) {
   });
 
   const set = (field: string, value: string) => setForm(f => ({ ...f, [field]: value }));
+
+  const setGuestName = (index: number, value: string) => {
+    setForm(f => ({ ...f, names: f.names.map((name, i) => i === index ? value : name) }));
+  };
+
+  const addGuestName = () => {
+    setForm(f => ({ ...f, names: [...f.names, ""] }));
+  };
+
+  const removeGuestName = (index: number) => {
+    setForm(f => ({
+      ...f,
+      names: f.names.length === 1 ? [""] : f.names.filter((_, i) => i !== index),
+    }));
+  };
 
   const setSong = (index: number, value: string) => {
     setForm(f => ({ ...f, song: f.song.map((song, i) => i === index ? value : song) }));
@@ -627,9 +630,9 @@ function RSVPPage({ onBack }: { onBack: () => void }) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const name = form.name.trim();
-    if (!name) {
-      setSubmitError("Please enter your full name.");
+    const names = form.names.map(name => name.trim()).filter(Boolean);
+    if (names.length === 0) {
+      setSubmitError("Please enter at least one guest name.");
       return;
     }
     if (form.attending !== "yes" && form.attending !== "no") {
@@ -644,9 +647,8 @@ function RSVPPage({ onBack }: { onBack: () => void }) {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          name,
+          name: names.join("\n"),
           phone: form.phone,
-          email: form.email,
           attending: form.attending,
           dietary: form.dietary.join(", "),
           dietaryNote: form.dietaryNote,
@@ -701,8 +703,14 @@ function RSVPPage({ onBack }: { onBack: () => void }) {
               transition={{ duration: 0.6 }}
               className="bg-accent/30 border border-border p-12 text-center shadow-sm"
             >
-              <p className="font-script text-secondary text-5xl mb-4">Thank you!</p>
-              <p className="font-serif text-xl text-primary mb-2">We cannot wait to celebrate with you!</p>
+              <p className="font-script text-secondary text-5xl mb-4">
+                {form.attending === "no" ? "We will miss you!" : "Thank you!"}
+              </p>
+              <p className="font-serif text-xl text-primary mb-2">
+                {form.attending === "no"
+                  ? "Thank you for letting us know."
+                  : "We cannot wait to celebrate with you!"}
+              </p>
               <p className="font-sans text-foreground/50 text-sm mt-4">#FoordForever</p>
             </motion.div>
           ) : (
@@ -711,21 +719,45 @@ function RSVPPage({ onBack }: { onBack: () => void }) {
               <SectionDivider label="Guest Details" />
               <div className="flex flex-col gap-4">
                 <div>
-                  <label className="font-sans text-xs uppercase tracking-widest text-foreground/50 mb-1.5 block">Full Name *</label>
-                  <input required value={form.name} onChange={e => set("name", e.target.value)}
-                    placeholder="Your full name"
-                    className="w-full border border-border px-4 py-3 font-sans text-sm bg-background focus:outline-none focus:border-primary transition-colors min-h-[44px]" />
+                  <FieldLabel>Who is included in this RSVP?</FieldLabel>
+                  <p className="font-sans text-sm leading-relaxed text-foreground/60 mb-4">
+                    Add everyone you are replying for, one name per line.
+                  </p>
+                  <div className="flex flex-col gap-3">
+                    {form.names.map((name, index) => (
+                      <div key={index} className="flex items-center gap-2">
+                        <input
+                          required={index === 0}
+                          value={name}
+                          onChange={e => setGuestName(index, e.target.value)}
+                          placeholder={index === 0 ? "First guest full name" : "Another guest full name"}
+                          className="min-h-[44px] w-full border border-border bg-background px-4 py-3 font-sans text-sm transition-colors focus:border-primary focus:outline-none"
+                        />
+                        {form.names.length > 1 && (
+                          <button
+                            type="button"
+                            onClick={() => removeGuestName(index)}
+                            aria-label={`Remove guest ${index + 1}`}
+                            className="flex h-11 w-11 shrink-0 items-center justify-center border border-border font-sans text-xl text-foreground/50 transition-colors hover:border-primary hover:text-primary"
+                          >
+                            &minus;
+                          </button>
+                        )}
+                      </div>
+                    ))}
+                    <button
+                      type="button"
+                      onClick={addGuestName}
+                      className="self-start border-b border-primary pb-1 font-sans text-xs uppercase tracking-[0.16em] text-primary transition-colors hover:border-secondary hover:text-secondary"
+                    >
+                      + Add another guest
+                    </button>
+                  </div>
                 </div>
                 <div>
                   <label className="font-sans text-xs uppercase tracking-widest text-foreground/50 mb-1.5 block">Contact Number</label>
                   <input type="tel" value={form.phone} onChange={e => set("phone", e.target.value)}
                     placeholder="+27 ..."
-                    className="w-full border border-border px-4 py-3 font-sans text-sm bg-background focus:outline-none focus:border-primary transition-colors min-h-[44px]" />
-                </div>
-                <div>
-                  <label className="font-sans text-xs uppercase tracking-widest text-foreground/50 mb-1.5 block">Email Address</label>
-                  <input type="email" value={form.email} onChange={e => set("email", e.target.value)}
-                    placeholder="you@example.com"
                     className="w-full border border-border px-4 py-3 font-sans text-sm bg-background focus:outline-none focus:border-primary transition-colors min-h-[44px]" />
                 </div>
               </div>
@@ -930,10 +962,12 @@ function playRevealSound() {
 
 function EnvelopeWelcome({ onOpen }: { onOpen: () => void }) {
   const [isOpening, setIsOpening] = useState(false);
+  const [showConfetti, setShowConfetti] = useState(false);
 
   const handleOpen = () => {
     if (isOpening) return;
     playRevealSound();
+    setShowConfetti(true);
     setIsOpening(true);
     window.setTimeout(() => {
       window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });
@@ -971,6 +1005,29 @@ function EnvelopeWelcome({ onOpen }: { onOpen: () => void }) {
           <span className="seal-monogram"><span>J</span><small>&amp;</small><span>L</span></span>
           <span className="seal-ornament seal-ornament-bottom">❧</span>
         </button>
+        {showConfetti && (
+          <div className="welcome-confetti" aria-hidden="true">
+            {Array.from({ length: 28 }, (_, index) => {
+              const angle = (index / 28) * Math.PI * 2;
+              const distance = 130 + (index % 5) * 24;
+              const colors = ["#f3d4d1", "#f3c7a8", "#d7c6e6", "#c7ded4", "#f3dfaa", "#fff8e8"];
+
+              return (
+                <span
+                  key={index}
+                  className="welcome-confetti-piece"
+                  style={{
+                    "--confetti-x": `${Math.cos(angle) * distance}px`,
+                    "--confetti-y": `${Math.sin(angle) * distance}px`,
+                    "--confetti-rotation": `${180 + index * 47}deg`,
+                    "--confetti-delay": `${(index % 6) * 18}ms`,
+                    backgroundColor: colors[index % colors.length],
+                  } as React.CSSProperties}
+                />
+              );
+            })}
+          </div>
+        )}
       </div>
 
       <motion.p

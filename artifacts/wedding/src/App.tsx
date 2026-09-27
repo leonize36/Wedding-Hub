@@ -565,6 +565,8 @@ function RSVPSection({ onOpen }: { onOpen: () => void }) {
   );
 }
 
+const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz-iHw5EKwsno62vE2TP5f_w99Xk4B7axgHQzSelvCyQhwAhPTZzdzx-2L8uPW22hB7Rg/exec";
+
 function RSVPPage({ onBack }: { onBack: () => void }) {
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -643,9 +645,11 @@ function RSVPPage({ onBack }: { onBack: () => void }) {
     setSubmitting(true);
     setSubmitError("");
     try {
-      const res = await fetch("/api/rsvp", {
+      const res = await fetch(APPS_SCRIPT_URL, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        // text/plain avoids a CORS preflight, which Apps Script web apps
+        // don't handle. The script still parses the body as JSON text.
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
         body: JSON.stringify({
           name: names.join("\n"),
           phone: form.phone,
@@ -658,12 +662,14 @@ function RSVPPage({ onBack }: { onBack: () => void }) {
           message: form.message,
         }),
       });
-      if (res.ok) {
+
+      const data = await res.json().catch(() => ({}) as { ok?: boolean; error?: string });
+
+      if (res.ok && data.ok) {
         setSubmitted(true);
         window.scrollTo({ top: 0, behavior: "smooth" });
       } else {
-        const data = await res.json().catch(() => ({}));
-        setSubmitError((data as { error?: string })?.error || "Something went wrong. Please try again.");
+        setSubmitError(data.error || "Something went wrong. Please try again.");
       }
     } catch {
       setSubmitError("Could not send your RSVP. Please check your connection and try again.");

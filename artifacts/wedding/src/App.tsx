@@ -204,6 +204,67 @@ function Invitation() {
   );
 }
 
+function getTimeLeft(target: Date) {
+  const diff = Math.max(0, target.getTime() - Date.now());
+  const totalSeconds = Math.floor(diff / 1000);
+  return {
+    days: Math.floor(totalSeconds / 86400),
+    hours: Math.floor((totalSeconds % 86400) / 3600),
+    minutes: Math.floor((totalSeconds % 3600) / 60),
+    seconds: totalSeconds % 60,
+  };
+}
+
+function Countdown() {
+  const target = React.useMemo(() => new Date("2027-03-20T15:00:00"), []);
+  const [timeLeft, setTimeLeft] = useState(() => getTimeLeft(target));
+
+  React.useEffect(() => {
+    const id = setInterval(() => setTimeLeft(getTimeLeft(target)), 1000);
+    return () => clearInterval(id);
+  }, [target]);
+
+  const units = [
+    { label: "Days", value: timeLeft.days },
+    { label: "Hours", value: timeLeft.hours },
+    { label: "Minutes", value: timeLeft.minutes },
+    { label: "Seconds", value: timeLeft.seconds },
+  ];
+
+  return (
+    <section className="py-16 md:py-24 px-6 bg-accent/40 text-center">
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-50px" }}
+        variants={stagger}
+      >
+        <motion.span variants={fadeUp} className="font-script text-secondary text-4xl md:text-5xl mb-2 block">
+          Counting Down
+        </motion.span>
+        <motion.h2 variants={fadeUp} className="font-serif text-3xl md:text-4xl text-primary mb-10">
+          Until We Say "I Do"
+        </motion.h2>
+        <motion.div variants={fadeUp} className="flex items-center justify-center gap-4 md:gap-10 flex-wrap max-w-2xl mx-auto">
+          {units.map(u => (
+            <div
+              key={u.label}
+              className="flex flex-col items-center bg-background px-5 py-4 md:px-8 md:py-6 shadow-sm min-w-[76px] md:min-w-[100px]"
+            >
+              <span className="font-serif text-3xl md:text-5xl text-primary tabular-nums">
+                {String(u.value).padStart(2, "0")}
+              </span>
+              <span className="font-sans text-[10px] md:text-xs uppercase tracking-widest text-foreground/60 mt-2">
+                {u.label}
+              </span>
+            </div>
+          ))}
+        </motion.div>
+      </motion.div>
+    </section>
+  );
+}
+
 function Details() {
   return (
     <section id="details" className="scroll-mt-20 py-20 md:py-32 bg-accent/40 relative overflow-hidden">
@@ -1093,6 +1154,7 @@ export default function App() {
           <Hero />
           <SectionNav onOpenRSVP={openRSVP} />
           <Invitation />
+          <Countdown />
           <Details />
           <Story />
           <VideoMoment />
